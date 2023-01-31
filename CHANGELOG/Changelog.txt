@@ -1,0 +1,4 @@
+LINK FOR GITHUB COMMITS ON MASTER BRANCH: https://github.com/FRC3546/2023-Competition-Robot/commits/main
+
+1/30/2023 JF Created the template for this year, also created a flipper subsystem,
+(read my commit for more info). Also added this changelog.
