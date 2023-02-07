@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 public class FlipperSubsystem extends SubsystemBase{
     
     private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
@@ -15,7 +17,10 @@ public class FlipperSubsystem extends SubsystemBase{
 
     private VictorSP raiseFlipperMotor = new VictorSP(0);
     private boolean flipperArmRaised = false;
-    
+
+    private AnalogPotentiometer pot = new AnalogPotentiometer(0, 3600, 0);
+    private int upValue = 1800;
+    private int downValue = 0;    
 
 
     public void OpenFlipperClamp(){
@@ -42,13 +47,27 @@ public class FlipperSubsystem extends SubsystemBase{
 
     // NEEDS A SYSTEM TO STOP THE MOTOR!!! (limit switch or something)
     public void RaiseFlipperArm(){
-        raiseFlipperMotor.set(0.5);
-        flipperArmRaised = true;
+
+        if (pot.get() <= upValue){
+            raiseFlipperMotor.set(0.5);
+            flipperArmRaised = true;
+        }
+
+        else{
+            raiseFlipperMotor.set(0.0);
+        }
     }
 
     public void LowerFlipperArm(){
-        raiseFlipperMotor.set(-0.5);
-        flipperArmRaised = false;
+
+        if(pot.get() >= downValue){        
+            raiseFlipperMotor.set(-0.5);
+            flipperArmRaised = false;
+        }
+
+        else{
+            raiseFlipperMotor.set(0.0);
+        }
     }
 
     public void toggleFlipperArm(){
@@ -62,7 +81,6 @@ public class FlipperSubsystem extends SubsystemBase{
             flipperArmRaised = true;
             RaiseFlipperArm();
         }
-
     }
 
 }
