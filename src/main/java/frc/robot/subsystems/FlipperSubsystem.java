@@ -22,6 +22,7 @@ public class FlipperSubsystem extends SubsystemBase{
     private int upValue = 1800;
     private int downValue = 0;    
 
+    public static boolean motorFinished = false;
 
     public void OpenFlipperClamp(){
         flipperClampSolenoid.set(Value.kReverse);
@@ -56,6 +57,8 @@ public class FlipperSubsystem extends SubsystemBase{
         else{
             raiseFlipperMotor.set(0.0);
         }
+
+        motorFinished = true;
     }
 
     public void LowerFlipperArm(){
@@ -68,6 +71,8 @@ public class FlipperSubsystem extends SubsystemBase{
         else{
             raiseFlipperMotor.set(0.0);
         }
+
+        motorFinished = true;
     }
 
     public void toggleFlipperArm(){

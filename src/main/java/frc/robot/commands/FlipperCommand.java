@@ -33,6 +33,7 @@ public class FlipperCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    FlipperSubsystem.motorFinished = false;
     System.out.println("Raise Lower Arm Command Initialized");
   }
  
@@ -74,6 +75,6 @@ public class FlipperCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return true;
+    return FlipperSubsystem.motorFinished;
   }
 }
