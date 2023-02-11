@@ -8,24 +8,20 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.FlipperSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class FlipperCommand extends CommandBase {
+public class IntakeLinearActuatorCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
   private final FlipperSubsystem m_armSubsystem;
   
   private final boolean isRaised;
-  private final boolean isOpen;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
+  /**   *
    * @param subsystem The subsystem used by this command.
    */
-  public FlipperCommand(boolean isRaisedParameter, boolean isOpenParameter) {
+  public IntakeLinearActuatorCommand(boolean isRaisedParameter) {
     
     m_armSubsystem = RobotContainer.m_flipperSubsystem;
     isRaised = isRaisedParameter;
-    isOpen = isOpenParameter;
 
 
     addRequirements(m_armSubsystem);
@@ -33,38 +29,25 @@ public class FlipperCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    FlipperSubsystem.motorFinished = false;
-    System.out.println("Raise Lower Arm Command Initialized");
+    if (endPosition > m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+        isLower = true;
+        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.1);
+    }
+    else if (endPosition < m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+      isLower = false;
+      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.1);
+    }
+
+    else{
+      System.out.println("Error in ExtendDeliveryArmCommand initialize()");
+    }
   }
  
   @Override
   public void execute() {
     
-    if(isRaised == true){
-        m_armSubsystem.RaiseFlipperArm();
-    }
+    
 
-    if(isRaised == false){
-        m_armSubsystem.LowerFlipperArm();
-    }
-
-    else{
-        System.out.println("No value for FlipperArmCommands");
-    }
-
-
-
-    if(isOpen == true){
-        m_armSubsystem.OpenFlipperClamp();
-    }
-
-    if(isOpen == false){
-        m_armSubsystem.CloseFlipperClamp();
-    }
-
-    else{
-        System.out.println("No value for the FlipperCommands");
-    }
 
   }
 
@@ -75,6 +58,6 @@ public class FlipperCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return FlipperSubsystem.motorFinished;
+    return false;
   }
 }

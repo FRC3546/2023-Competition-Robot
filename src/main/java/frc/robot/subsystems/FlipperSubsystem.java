@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
@@ -15,7 +15,7 @@ public class FlipperSubsystem extends SubsystemBase{
     private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
     private boolean flipperClampOpen = false;
 
-    private VictorSP raiseFlipperMotor = new VictorSP(0);
+    private Spark raiseFlipperMotor = new Spark(0);
     private boolean flipperArmRaised = false;
 
     private AnalogPotentiometer pot = new AnalogPotentiometer(0, 3600, 0);
