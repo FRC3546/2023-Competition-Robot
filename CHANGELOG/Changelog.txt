@@ -8,3 +8,6 @@ We will need an encoder for the extending arm.
 
 2/12/2023 JF I completed moving our new swerve library from democat.
 Crossing my fingers that it works.
+
+2/12/2023 JF Removed a lot of auto-generated comments and put our ExtendDeliveryArmCommand in Autos.java
+Also removed ExampleCommand.java and ExampleSubsystem.java.
