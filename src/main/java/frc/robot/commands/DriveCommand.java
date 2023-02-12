@@ -1,44 +1,51 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DrivetrainSubsystem;
+
 import java.util.function.DoubleSupplier;
 
 public class DriveCommand extends CommandBase {
-    private final DrivetrainSubsystem m_drivetrainSubsystem;
+    private final DrivetrainSubsystem drivetrain;
+    private final DoubleSupplier translationXSupplier;
+    private final DoubleSupplier translationYSupplier;
+    private final DoubleSupplier rotationSupplier;
 
-    private final DoubleSupplier m_translationXSupplier;
-    private final DoubleSupplier m_translationYSupplier;
-    private final DoubleSupplier m_rotationSupplier;
+    public DriveCommand(
+            DrivetrainSubsystem drivetrain,
+            DoubleSupplier translationXSupplier,
+            DoubleSupplier translationYSupplier,
+            DoubleSupplier rotationSupplier
+    ) {
+        this.drivetrain = drivetrain;
+        this.translationXSupplier = translationXSupplier;
+        this.translationYSupplier = translationYSupplier;
+        this.rotationSupplier = rotationSupplier;
 
-    public DriveCommand(DrivetrainSubsystem drivetrainSubsystem,
-                               DoubleSupplier translationXSupplier,
-                               DoubleSupplier translationYSupplier,
-                               DoubleSupplier rotationSupplier) {
-        this.m_drivetrainSubsystem = drivetrainSubsystem;
-        this.m_translationXSupplier = translationXSupplier;
-        this.m_translationYSupplier = translationYSupplier;
-        this.m_rotationSupplier = rotationSupplier;
-
-        addRequirements(drivetrainSubsystem);
+        addRequirements(drivetrain);
     }
 
     @Override
     public void execute() {
-        // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-        m_drivetrainSubsystem.drive(
+        double translationXPercent = translationXSupplier.getAsDouble();
+        double translationYPercent = translationYSupplier.getAsDouble();
+        double rotationPercent = rotationSupplier.getAsDouble();
+
+        drivetrain.drive(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
-                        m_translationXSupplier.getAsDouble(),
-                        m_translationYSupplier.getAsDouble(),
-                        m_rotationSupplier.getAsDouble(),
-                        m_drivetrainSubsystem.getGyroscopeRotation()
+                        translationXPercent * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+                        translationYPercent * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+                        rotationPercent * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+                        drivetrain.getRotation()
                 )
         );
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+        // Stop the drivetrain
+        drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
     }
 }
+

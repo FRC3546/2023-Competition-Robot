@@ -11,44 +11,43 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeLinearActuatorCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
-  private final FlipperSubsystem m_armSubsystem;
+  private final FlipperSubsystem m_flipperSubsystem;
   
-  private final boolean isRaised;
+  // private final boolean isRaised;
+  private final double position;
+  private  boolean isLower;
 
   /**   *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeLinearActuatorCommand(boolean isRaisedParameter) {
+  public IntakeLinearActuatorCommand(double position) {
     
-    m_armSubsystem = RobotContainer.m_flipperSubsystem;
-    isRaised = isRaisedParameter;
+    this.m_flipperSubsystem = RobotContainer.m_flipperSubsystem;
+    this.position = position;
 
 
-    addRequirements(m_armSubsystem);
+    addRequirements(m_flipperSubsystem);
   }
 
   @Override
   public void initialize() {
-    if (endPosition > m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+    if (position > m_flipperSubsystem.GetFlipperPosition()){
         isLower = true;
-        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.1);
+        m_flipperSubsystem.SetFlipperSpeed(0.1);
     }
-    else if (endPosition < m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+    else if (position < m_flipperSubsystem.GetFlipperPosition()){
       isLower = false;
-      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.1);
+      m_flipperSubsystem.SetFlipperSpeed(-0.1);
     }
 
     else{
-      System.out.println("Error in ExtendDeliveryArmCommand initialize()");
+      System.out.println("Error in IntakeLinearActuatorCommand initialize()");
     }
   }
  
   @Override
   public void execute() {
     
-    
-
-
   }
 
   @Override
@@ -58,6 +57,7 @@ public class IntakeLinearActuatorCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return (isLower && m_flipperSubsystem.GetFlipperPosition() > position) || 
+    (!isLower && m_flipperSubsystem.GetFlipperPosition() < position );
   }
 }

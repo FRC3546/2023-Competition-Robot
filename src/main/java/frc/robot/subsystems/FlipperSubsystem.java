@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class FlipperSubsystem extends SubsystemBase{
     
@@ -18,9 +18,8 @@ public class FlipperSubsystem extends SubsystemBase{
     private Spark raiseFlipperMotor = new Spark(0);
     private boolean flipperArmRaised = false;
 
-    private AnalogPotentiometer pot = new AnalogPotentiometer(0, 3600, 0);
-    private int upValue = 1800;
-    private int downValue = 0;    
+    private Encoder flipperEncoder = new Encoder(8, 9);
+      
 
     public static boolean motorFinished = false;
 
@@ -47,45 +46,53 @@ public class FlipperSubsystem extends SubsystemBase{
     }
 
     // NEEDS A SYSTEM TO STOP THE MOTOR!!! (limit switch or something)
-    public void RaiseFlipperArm(){
+    // public void RaiseFlipperArm(){
 
-        if (pot.get() <= upValue){
-            raiseFlipperMotor.set(0.5);
-            flipperArmRaised = true;
-        }
+    //     if (pot.get() <= upValue){
+    //         raiseFlipperMotor.set(0.5);
+    //         flipperArmRaised = true;
+    //     }
 
-        else{
-            raiseFlipperMotor.set(0.0);
-        }
+    //     else{
+    //         raiseFlipperMotor.set(0.0);
+    //     }
 
-        motorFinished = true;
-    }
+    //     motorFinished = true;
+    // }
 
-    public void LowerFlipperArm(){
+    // public void LowerFlipperArm(){
 
-        if(pot.get() >= downValue){        
-            raiseFlipperMotor.set(-0.5);
-            flipperArmRaised = false;
-        }
+    //     if(pot.get() >= downValue){        
+    //         raiseFlipperMotor.set(-0.5);
+    //         flipperArmRaised = false;
+    //     }
 
-        else{
-            raiseFlipperMotor.set(0.0);
-        }
+    //     else{
+    //         raiseFlipperMotor.set(0.0);
+    //     }
 
-        motorFinished = true;
-    }
+    //     motorFinished = true;
+    // }
 
-    public void toggleFlipperArm(){
+    // public void toggleFlipperArm(){
         
-        if(flipperArmRaised == true){
-            flipperArmRaised = false;
-            LowerFlipperArm();
-        }
+    //     if(flipperArmRaised == true){
+    //         flipperArmRaised = false;
+    //         LowerFlipperArm();
+    //     }
 
-        if(flipperArmRaised == false){
-            flipperArmRaised = true;
-            RaiseFlipperArm();
-        }
+    //     if(flipperArmRaised == false){
+    //         flipperArmRaised = true;
+    //         RaiseFlipperArm();
+    //     }
+    // }
+
+    public int GetFlipperPosition(){
+        return flipperEncoder.get();
+    }
+
+    public void SetFlipperSpeed(double speed){
+        raiseFlipperMotor.set(speed);
     }
 
 }

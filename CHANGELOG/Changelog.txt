@@ -2,5 +2,9 @@ LINK FOR GITHUB COMMITS ON MASTER BRANCH: https://github.com/FRC3546/2023-Compet
 
 1/30/2023 JF Created the template for this year, also created a flipper subsystem,
 (read my commit for more info). Also added this changelog.
+
 1/31/2023 JF Added code for our delivery arm based off of our current specs.
 We will need an encoder for the extending arm.
+
+2/12/2023 JF I completed moving our new swerve library from democat.
+Crossing my fingers that it works.
