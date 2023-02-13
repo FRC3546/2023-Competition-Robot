@@ -11,3 +11,6 @@ Crossing my fingers that it works.
 
 2/12/2023 JF Removed a lot of auto-generated comments and put our ExtendDeliveryArmCommand in Autos.java
 Also removed ExampleCommand.java and ExampleSubsystem.java.
+
+2/13/2023 JF Removed our unecessary commands (because we are going to use instant commands for solenoids).
+Also started mapping out a command for picking up the gamepiece.

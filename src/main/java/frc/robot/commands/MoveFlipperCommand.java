@@ -10,7 +10,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.FlipperSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeLinearActuatorCommand extends CommandBase {
+public class MoveFlipperCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
   private final FlipperSubsystem m_flipperSubsystem;
@@ -22,7 +22,7 @@ public class IntakeLinearActuatorCommand extends CommandBase {
   /**   *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeLinearActuatorCommand(double position) {
+  public MoveFlipperCommand(double position) {
     
     this.m_flipperSubsystem = RobotContainer.m_flipperSubsystem;
     this.position = position;

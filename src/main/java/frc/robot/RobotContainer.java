@@ -5,22 +5,17 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-
+import frc.robot.commands.Autos;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.DeliveryArmSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FlipperSubsystem;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-// Subsystems
-import frc.robot.subsystems.FlipperSubsystem;
-import frc.robot.subsystems.DeliveryArmSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem;
-
-// Commands
-import frc.robot.commands.Autos;
-import frc.robot.commands.DriveCommand;
 
 
 
