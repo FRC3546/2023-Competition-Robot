@@ -14,3 +14,5 @@ Also removed ExampleCommand.java and ExampleSubsystem.java.
 
 2/13/2023 JF Removed our unecessary commands (because we are going to use instant commands for solenoids).
 Also started mapping out a command for picking up the gamepiece.
+
+2/15/2023 JF Updated to the latest version of WPILIB and updated all of our vendor libraries.
