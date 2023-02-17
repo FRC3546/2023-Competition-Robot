@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
+
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,12 +37,14 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+    m_drivetrainSubsystem.register();
+
     // Teleop drivetrain movement
     m_drivetrainSubsystem.setDefaultCommand(new DriveCommand(
             m_drivetrainSubsystem,
             () -> -modifyAxis(m_driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_driverController.getRightY()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+            () -> -modifyAxis(m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
     
 
@@ -51,11 +54,11 @@ public class RobotContainer {
  
   private void configureBindings() {
    
-    new JoystickButton(m_driverController, Button.kA.value)
-      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
+    // new JoystickButton(m_driverController, Button.kA.value)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
     
-    new JoystickButton(m_driverController, Button.kB.value)
-      .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
+    // new JoystickButton(m_driverController, Button.kB.value)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
     
     
 
