@@ -8,7 +8,6 @@ import frc.robot.Constants;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
-
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -37,7 +36,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final SwerveModule backLeftModule;
     private final SwerveModule backRightModule;
 
-    private final AHRS gyroscope = new AHRS();
+    private final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
+    
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             new Translation2d(Constants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, Constants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
@@ -50,6 +50,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     public DrivetrainSubsystem() {
+
+
+
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
         frontLeftModule = new MkSwerveModuleBuilder()
@@ -126,10 +129,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         odometry.update(
-                Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
+                Rotation2d.fromDegrees(-gyroscope.getFusedHeading()),
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
-
+        System.out.println(gyroscope.getYaw());
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
 
         frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
