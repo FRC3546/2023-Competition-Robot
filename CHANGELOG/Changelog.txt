@@ -16,3 +16,10 @@ Also removed ExampleCommand.java and ExampleSubsystem.java.
 Also started mapping out a command for picking up the gamepiece.
 
 2/15/2023 JF Updated to the latest version of WPILIB and updated all of our vendor libraries.
+
+2/15/2023 JF & CF Made adjustments to our swerve code to fix field-oriented driving issues.
+
+2/16/2023 JF Added some code so we can test our flipper and read the encoder values to get the 90 degree flip.
+
+2/18/2023 JF Added button bindings for our subsystems, including a safety system for raising and lowering-
+the flipper. Added a command for performing a reset on our gyro and possibly the encoders.

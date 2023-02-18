@@ -16,6 +16,37 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kcodriverControllerPort = 1;
+
+    // driver buttons
+    public static final int kResetGyroEncoderButton = 1;
+
+    // codriver buttons
+
+    // flipper buttons
+    public static final int kFlipperToggleButton = 2;
+    public static final int kFlipperDownButton = 6;
+    public static final int kFlipperUpButton = 4;
+
+    // flipper SAFETY
+    public static final int kFlipperEnableSafety = 3;
+    public static final int kFlipperDisableSafety = 5;
+    public static boolean kFlipperIsManual;
+
+    // extension arm clamp button
+    public static final int kArmClampButton = 1;
+
+    // extension arm buttons for the CONE
+    public static final int kArmLowCone = 8;
+    public static final int kArmMidCone = 10;
+    public static final int kArmHighCone = 12;
+
+    // extension arm buttons for the CUBE
+    public static final int kArmLowCube = 7;
+    public static final int kArmMidCube = 9;
+    public static final int lArmHighCube = 11;
+
+
   }
 
   public static final double DRIVETRAIN_TRACKWIDTH_METERS =  0.55245;

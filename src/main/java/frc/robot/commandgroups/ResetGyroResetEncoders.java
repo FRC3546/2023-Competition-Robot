@@ -14,15 +14,14 @@ import frc.robot.commands.MoveFlipperCommand;
 import frc.robot.subsystems.FlipperSubsystem;
 
 
-public class PickUpGamepieceCommand extends SequentialCommandGroup{
+public class ResetGyroResetEncoders extends SequentialCommandGroup{
 
-    public PickUpGamepieceCommand(){
+    public ResetGyroResetEncoders(){
         
 
         addCommands(
-            new InstantCommand(() -> RobotContainer.m_flipperSubsystem.OpenFlipperClamp()), // Opens flipper
-            new MoveFlipperCommand(Constants.flipperArmDown) // Lowers flipper
-        );
+            new InstantCommand(() -> RobotContainer.m_drivetrainSubsystem.zeroGyroscope()));
+        
         
 
 

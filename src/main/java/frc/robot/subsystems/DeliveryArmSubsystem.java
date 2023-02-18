@@ -21,7 +21,7 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     private boolean DeliveryArmClampOpen = false;
 
-    private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
+    private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
     private boolean stopped;
 
     private TalonSRX extendingArmMotor = new TalonSRX(1);

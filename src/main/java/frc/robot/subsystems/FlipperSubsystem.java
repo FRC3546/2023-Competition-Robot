@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class FlipperSubsystem extends SubsystemBase{
     
-    private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
+    private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
     private boolean flipperClampOpen = false;
 
     private Spark raiseFlipperMotor = new Spark(0);
@@ -26,6 +26,10 @@ public class FlipperSubsystem extends SubsystemBase{
       
 
     public static boolean motorFinished = false;
+    
+    public void UpdateSmartdashboard(){
+        SmartDashboard.putNumber("Flipper Encoder Value", flipperEncoder.get());
+    }
 
     public void OpenFlipperClamp(){
         flipperClampSolenoid.set(Value.kReverse);
