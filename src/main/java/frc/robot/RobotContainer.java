@@ -22,7 +22,10 @@ import frc.robot.commandgroups.ResetGyroResetEncoders;
 
 // commands
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.MoveFlipperCommand;
+import frc.robot.commands.JoystickExtendDeliveryArmCommand;
+import frc.robot.commands.JoystickMoveFlipperCommand;
 
 // subsystems
 import frc.robot.subsystems.DeliveryArmSubsystem;
@@ -31,8 +34,7 @@ import frc.robot.subsystems.FlipperSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Joystick;
@@ -41,18 +43,21 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class RobotContainer {
 
-  // Subsystem declarations
+  // subsystem declarations
   public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   public static final FlipperSubsystem m_flipperSubsystem = new FlipperSubsystem();
   public static final DeliveryArmSubsystem m_deliverySubsystem = new DeliveryArmSubsystem();
 
   // controllers
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
-  private final Joystick m_codriverController = new Joystick(OperatorConstants.kcodriverControllerPort);
+  public final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
+  public static final Joystick m_codriverController = new Joystick(OperatorConstants.kcodriverControllerPort);
 
   public RobotContainer() {
 
+    
+
     m_drivetrainSubsystem.register();
+    m_flipperSubsystem.register();
 
     // Teleop drivetrain movement
     m_drivetrainSubsystem.setDefaultCommand(new DriveCommand(
@@ -62,14 +67,19 @@ public class RobotContainer {
             () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
+    //m_deliverySubsystem.setDefaultCommand(new JoystickExtendDeliveryArmCommand(m_codriverController.getY()));
+
+    // m_flipperSubsystem.setDefaultCommand(new JoystickMoveFlipperCommand(-(m_codriverController.getY())));
 
 
-    if (OperatorConstants.kFlipperIsManual == true){
-      m_flipperSubsystem.setDefaultCommand(new MoveFlipperCommand(m_codriverController.getY()));
-    }
-    else{
-      ;
-    }
+    // if (OperatorConstants.kFlipperIsManual == true && OperatorConstants.kArmIsManual != true){
+      
+    //   OperatorConstants.kArmIsManual = false;
+    // }
+    // else{
+      
+    //   OperatorConstants.kFlipperIsManual = false;
+    // }
     
 
 
@@ -80,39 +90,66 @@ public class RobotContainer {
   private void configureBindings() {
 
     // driver drivetrain buttons
-    new JoystickButton(m_driverController, OperatorConstants.kResetGyroEncoderButton)
-      .onTrue(new ResetGyroResetEncoders());
+    // new JoystickButton(m_driverController, OperatorConstants.kResetGyroEncoderButton)
+    //   .onTrue(new ResetGyroResetEncoders());
 
 
-    // codriver flipper buttons
-    new JoystickButton(m_codriverController, OperatorConstants.kFlipperUpButton)
-      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
+    // // codriver flipper buttons
+    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperUpButton)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
     
-    new JoystickButton(m_codriverController, OperatorConstants.kFlipperDownButton)
+    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperDownButton)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
+
+    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperToggleButton)
+    //   .toggleOnTrue(new PickUpGamepieceCommand());
+
+    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperDisableSafety)
+    //   .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = true));
+    
+    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperEnableSafety)
+    //   .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = false));
+
+    // codriver arm buttons
+    // new JoystickButton(m_codriverController, OperatorConstants.kArmDisableSafety)
+    //   .onTrue(new InstantCommand(() -> OperatorConstants.kArmIsManual = true));
+
+    // new JoystickButton(m_codriverController, 1)
+    //   .onTrue(new InstantCommand(() -> m_deliverySubsystem.Stop()));
+
+    // new JoystickButton(m_codriverController, 3)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.SetFlipperSpeed(0.3)));
+    
+    // new JoystickButton(m_codriverController, 5)
+    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.SetFlipperSpeed(-0.3)));
+
+    // flipper arm clamp
+    new JoystickButton(m_codriverController, 6)
+      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
+
+    new JoystickButton(m_codriverController, 4)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
-    new JoystickButton(m_codriverController, OperatorConstants.kFlipperToggleButton)
-      .toggleOnTrue(new PickUpGamepieceCommand());
-
-    new JoystickButton(m_codriverController, OperatorConstants.kFlipperDisableSafety)
-      .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = true));
+    // delivery arm clamp
+    new JoystickButton(m_codriverController, 5)
+      .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
     
-    new JoystickButton(m_codriverController, OperatorConstants.kFlipperEnableSafety)
-      .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = false));
+    new JoystickButton(m_codriverController, 3)
+      .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
+
 
     
-      
+    new JoystickButton(m_codriverController, 9)
+      .onTrue(new MoveFlipperCommand(Constants.flipperArmDown));
+
+    new JoystickButton(m_codriverController, 10)
+      .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
     
     
 
 
   }
 
-
-  // update our smart dashboard
-  public void UpdateSmartdashboard(){
-    m_flipperSubsystem.UpdateSmartdashboard();
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -5,39 +5,37 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+
 
 public class FlipperSubsystem extends SubsystemBase{
     
-    private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+    private DoubleSolenoid flipperClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
     private boolean flipperClampOpen = false;
 
     private Spark raiseFlipperMotor = new Spark(0);
     private boolean flipperArmRaised = false;
 
-    private Encoder flipperEncoder = new Encoder(8, 9);
-      
+    private DutyCycleEncoder flipperEncoder = new DutyCycleEncoder(9);
 
     public static boolean motorFinished = false;
-    
-    public void UpdateSmartdashboard(){
-        SmartDashboard.putNumber("Flipper Encoder Value", flipperEncoder.get());
-    }
 
     public void OpenFlipperClamp(){
-        flipperClampSolenoid.set(Value.kReverse);
+        flipperClampSolenoid.set(Value.kForward);
         flipperClampOpen = true;
     }
 
     public void CloseFlipperClamp(){
-        flipperClampSolenoid.set(Value.kForward);
+        flipperClampSolenoid.set(Value.kReverse);
         flipperClampOpen = false;
     }
 
@@ -95,12 +93,30 @@ public class FlipperSubsystem extends SubsystemBase{
     //     }
     // }
 
-    public int GetFlipperPosition(){
-        return flipperEncoder.get();
+    public double GetFlipperPosition(){
+        return flipperEncoder.getAbsolutePosition();
+    }
+
+    public double GetFlipperMotorSpeed(){
+        return raiseFlipperMotor.get();
     }
 
     public void SetFlipperSpeed(double speed){
         raiseFlipperMotor.set(speed);
     }
+
+    @Override
+    public void periodic() {
+
+        if (((GetFlipperPosition()) < Constants.flipperArmDown || (RobotContainer.m_codriverController.getY() < -0.2))
+         && (GetFlipperPosition() > Constants.flipperArmUp || (RobotContainer.m_codriverController.getY() > 0.2))){
+            raiseFlipperMotor.set(RobotContainer.m_codriverController.getY());
+        }
+
+        else{
+            raiseFlipperMotor.set(0);
+        }
+
+  }
 
 }

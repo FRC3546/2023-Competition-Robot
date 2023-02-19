@@ -17,7 +17,7 @@ public class MoveFlipperCommand extends CommandBase {
   
   // private final boolean isRaised;
   private final double position;
-  private  boolean isLower;
+  private  boolean lowering;
 
   /**   *
    * @param subsystem The subsystem used by this command.
@@ -34,16 +34,16 @@ public class MoveFlipperCommand extends CommandBase {
   @Override
   public void initialize() {
     if (position > m_flipperSubsystem.GetFlipperPosition()){
-        isLower = true;
-        m_flipperSubsystem.SetFlipperSpeed(0.1);
+        lowering = true;
+        m_flipperSubsystem.SetFlipperSpeed(-0.5);
     }
     else if (position < m_flipperSubsystem.GetFlipperPosition()){
-      isLower = false;
-      m_flipperSubsystem.SetFlipperSpeed(-0.1);
+      lowering = false;
+      m_flipperSubsystem.SetFlipperSpeed(0.5);
     }
 
     else{
-      System.out.println("Error in IntakeLinearActuatorCommand initialize()");
+      System.out.println("Error in MoveFlipperCommand initialize()");
     }
   }
  
@@ -54,12 +54,12 @@ public class MoveFlipperCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    ;
+    m_flipperSubsystem.SetFlipperSpeed(0);
   }
 
   @Override
   public boolean isFinished() {
-    return (isLower && m_flipperSubsystem.GetFlipperPosition() > position) || 
-    (!isLower && m_flipperSubsystem.GetFlipperPosition() < position );
+    return (lowering && m_flipperSubsystem.GetFlipperPosition() >= position) || 
+    (!lowering && m_flipperSubsystem.GetFlipperPosition() <= position );
   }
 }

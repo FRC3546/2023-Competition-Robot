@@ -36,6 +36,10 @@ public final class Constants {
     // extension arm clamp button
     public static final int kArmClampButton = 1;
 
+    // extension arm SAFETY
+    public static final int kArmDisableSafety = 5;
+    public static boolean kArmIsManual;
+
     // extension arm buttons for the CONE
     public static final int kArmLowCone = 8;
     public static final int kArmMidCone = 10;
@@ -79,6 +83,6 @@ public final class Constants {
   public static final double deliveryArmFullyExtended = 1000;
   public static final double deliveryArmFullyRetracted = 0;
 
-  public static final double flipperArmUp = 90;
-  public static final double flipperArmDown = 0;
+  public static final double flipperArmUp = 0.4512;
+  public static final double flipperArmDown = 0.55331;
 }

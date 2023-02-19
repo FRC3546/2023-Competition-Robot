@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class DeliveryArmSubsystem extends SubsystemBase{
 
-    private DoubleSolenoid DeliveryArmClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
+    private DoubleSolenoid DeliveryArmClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
 
     private boolean DeliveryArmClampOpen = false;
 
-    private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
+    private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
     private boolean stopped;
 
     private TalonSRX extendingArmMotor = new TalonSRX(1);
@@ -34,13 +34,13 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
 
     public void OpenDeliveryArmClamp(){
-        DeliveryArmClampSolenoid.set(Value.kReverse);
+        DeliveryArmClampSolenoid.set(Value.kForward);
         DeliveryArmClampOpen = true;
     }
 
 
     public void CloseDeliveryArmClamp(){
-        DeliveryArmClampSolenoid.set(Value.kForward);
+        DeliveryArmClampSolenoid.set(Value.kReverse);
         DeliveryArmClampOpen = false;
     } 
 
@@ -67,7 +67,7 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     public void Release(){
         stopped = false;
-        StopSolenoid.set(Value.kForward);
+        StopSolenoid.set(Value.kReverse);
     }
 
     public void ToggleStop(){
