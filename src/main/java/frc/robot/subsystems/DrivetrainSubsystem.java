@@ -132,7 +132,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 Rotation2d.fromDegrees(-gyroscope.getFusedHeading()),
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
-        System.out.println(gyroscope.getYaw());
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
 
         frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
