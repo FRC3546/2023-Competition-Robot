@@ -27,30 +27,29 @@ public class MoveFlipperCommand extends CommandBase {
     this.m_flipperSubsystem = RobotContainer.m_flipperSubsystem;
     this.position = position;
 
-
     addRequirements(m_flipperSubsystem);
   }
 
   @Override
   public void initialize() {
-    if (position > m_flipperSubsystem.GetFlipperPosition()){
+    
+    if (m_flipperSubsystem.GetFlipperPosition() < position){
         lowering = true;
-        m_flipperSubsystem.SetFlipperSpeed(-0.5);
+        m_flipperSubsystem.SetFlipperSpeed(-0.3);
     }
-    else if (position < m_flipperSubsystem.GetFlipperPosition()){
+    else if (m_flipperSubsystem.GetFlipperPosition() > position){
       lowering = false;
-      m_flipperSubsystem.SetFlipperSpeed(0.5);
+      m_flipperSubsystem.SetFlipperSpeed(0.3);
     }
 
     else{
-      System.out.println("Error in MoveFlipperCommand initialize()");
+      System.out.println("Error in MoveFlipperCommand initialition()");
+      m_flipperSubsystem.SetFlipperSpeed(0);
     }
   }
  
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
 
   @Override
   public void end(boolean interrupted) {

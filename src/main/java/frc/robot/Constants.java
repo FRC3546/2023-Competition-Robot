@@ -17,6 +17,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kcodriverControllerPort = 1;
+    public static final int ksecondCodriverControllerPort = 2;
 
     // driver buttons
     public static final int kResetGyroEncoderButton = 1;
@@ -80,9 +81,9 @@ public final class Constants {
   public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 3;
   public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(289.248046875);
 
-  public static final double deliveryArmFullyExtended = 1000;
+  public static final double deliveryArmFullyExtended = 0;
   public static final double deliveryArmFullyRetracted = 0;
 
-  public static final double flipperArmUp = 0.4512;
+  public static final double flipperArmUp = .318;
   public static final double flipperArmDown = 0.55331;
 }

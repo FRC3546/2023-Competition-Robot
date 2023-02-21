@@ -37,11 +37,11 @@ public class ExtendDeliveryArmCommand extends CommandBase{
 
     if (endPosition > m_deliveryArmSubsystem.GetDeliveryArmPosition()){
         isLower = true;
-        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.1);
+        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.3);
     }
     else if (endPosition < m_deliveryArmSubsystem.GetDeliveryArmPosition()){
       isLower = false;
-      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.1);
+      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.3);
     }
 
     else{

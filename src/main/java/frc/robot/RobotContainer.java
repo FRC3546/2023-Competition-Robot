@@ -51,6 +51,7 @@ public class RobotContainer {
   // controllers
   public final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
   public static final Joystick m_codriverController = new Joystick(OperatorConstants.kcodriverControllerPort);
+  public static final Joystick m_secondCodriverController = new Joystick(OperatorConstants.ksecondCodriverControllerPort);
 
   public RobotContainer() {
 
@@ -144,6 +145,27 @@ public class RobotContainer {
 
     new JoystickButton(m_codriverController, 10)
       .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
+
+    new JoystickButton(m_codriverController, 1)
+      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))
+      .onFalse(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
+
+
+
+
+
+
+
+
+
+    new JoystickButton(m_secondCodriverController, 1)
+      .toggleOnTrue(new InstantCommand(() -> m_deliverySubsystem.ToggleDeliveryArmClamp()));
+
+    new JoystickButton(m_secondCodriverController, 2)
+      .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
+    
+    new JoystickButton(m_secondCodriverController, 3)
+      .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
     
     
 
