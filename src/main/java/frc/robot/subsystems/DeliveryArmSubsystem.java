@@ -137,7 +137,7 @@ public class DeliveryArmSubsystem extends SubsystemBase{
             if((Math.abs(RobotContainer.m_secondCodriverController.getY())) > .1){
                 Release();
             extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            System.out.println("Within Bounds");
+            // System.out.println("Within Bounds");
             }
             else{
                 extendingArmMotor.set(ControlMode.PercentOutput, 0);
@@ -148,19 +148,19 @@ public class DeliveryArmSubsystem extends SubsystemBase{
         else if(GetDeliveryArmPosition() >= Constants.deliveryArmFullyExtended && -RobotContainer.m_secondCodriverController.getY() < -0.1){
             Release();
             extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            System.out.println("Too far coming back");
+            // System.out.println("Too far coming back");
         }
 
         else if(GetDeliveryArmPosition() <= Constants.deliveryArmFullyRetracted && -RobotContainer.m_secondCodriverController.getY() > 0.1){
             Release();
             extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            System.out.println("Too short coming back");
+            // System.out.println("Too short coming back");
         }
 
         else{
             extendingArmMotor.set(ControlMode.PercentOutput, 0);
             Stop();
-            System.out.println("Out of bounds");
+            // System.out.println("Out of bounds");
         }
 
     }

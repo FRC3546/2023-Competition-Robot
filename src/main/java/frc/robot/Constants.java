@@ -81,7 +81,7 @@ public final class Constants {
   public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 3;
   public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(289.248046875);
 
-  public static final double deliveryArmFullyExtended = 55100;
+  public static final double deliveryArmFullyExtended = 59500;
   public static final double deliveryArmFullyRetracted = 0;
 
   public static final double flipperArmUp = .318;
