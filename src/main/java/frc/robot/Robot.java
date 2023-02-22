@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Manual Flipper Activated", OperatorConstants.kFlipperIsManual);
     SmartDashboard.putNumber("Joystick Y alue", RobotContainer.m_codriverController.getY());
     SmartDashboard.putNumber("flipper motor speed", RobotContainer.m_flipperSubsystem.GetFlipperMotorSpeed());
+    SmartDashboard.putNumber("Encoder Value", RobotContainer.m_deliverySubsystem.GetDeliveryArmPosition());
     
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,

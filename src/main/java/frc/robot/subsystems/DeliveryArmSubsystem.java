@@ -26,11 +26,12 @@ public class DeliveryArmSubsystem extends SubsystemBase{
     private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
     private boolean stopped;
 
-    private TalonSRX extendingArmMotor = new TalonSRX(1);
+    private TalonSRX extendingArmMotor = new TalonSRX(41);
     //private boolean deliveryArmExtended = false;
 
     
     public DeliveryArmSubsystem() {
+        StopSolenoid.set(Value.kForward);
         extendingArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     }
 
@@ -63,13 +64,13 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     public void Stop(){
         stopped = true;
-        StopSolenoid.set(Value.kForward);
+        StopSolenoid.set(Value.kReverse);
     }
 
 
     public void Release(){
         stopped = false;
-        StopSolenoid.set(Value.kReverse);
+        StopSolenoid.set(Value.kForward);
     }
 
     public void ToggleStop(){
@@ -97,24 +98,34 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-
+        // System.out.println(extendingArmMotor.getSelectedSensorPosition());
+        
         if(GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended && 
         GetDeliveryArmPosition() > Constants.deliveryArmFullyRetracted){
-            extendingArmMotor.set(ControlMode.PercentOutput, RobotContainer.m_codriverController.getY());
+            if (Math.abs(RobotContainer.m_secondCodriverController.getY()) > .1){
+                Release();
+                extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+            }
+            else{
+                extendingArmMotor.set(ControlMode.PercentOutput, 0);
+                Stop();
+            }
             System.out.println("In bounds");
         }
-        else if(GetDeliveryArmPosition() > Constants.deliveryArmFullyRetracted && RobotContainer.m_codriverController.getY() > 0.1){
-            extendingArmMotor.set(ControlMode.PercentOutput, RobotContainer.m_codriverController.getY());
-            System.out.println("");
+        else if(GetDeliveryArmPosition() > Constants.deliveryArmFullyExtended && -RobotContainer.m_codriverController.getY() < -0.1){
+            // Release();
+            extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+            System.out.println("Extended Past trying to return");
         }
-        else if(GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended && RobotContainer.m_secondCodriverController.getY() < -.1){
-            extendingArmMotor.set(ControlMode.PercentOutput, RobotContainer.m_codriverController.getY());
-            System.out.println("");
+        else if(GetDeliveryArmPosition() < Constants.deliveryArmFullyRetracted && -RobotContainer.m_secondCodriverController.getY() > .1){
+            // Release();
+            extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+            System.out.println("Retracted Past Trying to Return");
         }
         else{
-            extendingArmMotor.set(ControlMode.PercentOutput, RobotContainer.m_codriverController.getY());
+            extendingArmMotor.set(ControlMode.PercentOutput, 0);
             System.out.println("trying to do bad things");
-            //stop();
+            // Stop();
         }
         
         

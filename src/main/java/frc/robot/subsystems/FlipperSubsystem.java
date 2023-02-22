@@ -90,11 +90,11 @@ public class FlipperSubsystem extends SubsystemBase{
                 raiseFlipperMotor.set(RobotContainer.m_codriverController.getY());
                 // System.out.println("In bounds");
             }
-            else if(GetFlipperPosition() > Constants.flipperArmDown && RobotContainer.m_codriverController.getY() < -0.1){
+            else if(GetFlipperPosition() > Constants.flipperArmDown && RobotContainer.m_codriverController.getY() > 0.1){
                 raiseFlipperMotor.set(RobotContainer.m_codriverController.getY());
                 // System.out.println("Too Low out of bounds Increasing");
             }
-            else if(GetFlipperPosition() < Constants.flipperArmUp && RobotContainer.m_codriverController.getY() > .1){
+            else if(GetFlipperPosition() < Constants.flipperArmUp && RobotContainer.m_codriverController.getY() < -.1){
                 raiseFlipperMotor.set(RobotContainer.m_codriverController.getY());
                 // System.out.println("Too High out of bounds Increasing");
             }
@@ -104,5 +104,9 @@ public class FlipperSubsystem extends SubsystemBase{
             }
 
   }
+
+    public double getDeliveryArmPosition() {
+        return 0;
+    }
 
 }
