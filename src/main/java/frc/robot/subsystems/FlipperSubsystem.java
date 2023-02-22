@@ -105,8 +105,4 @@ public class FlipperSubsystem extends SubsystemBase{
 
   }
 
-    public double getDeliveryArmPosition() {
-        return 0;
-    }
-
 }
