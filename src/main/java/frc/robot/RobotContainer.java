@@ -159,7 +159,7 @@ public class RobotContainer {
 
 
     new JoystickButton(m_secondCodriverController, 1)
-      .toggleOnTrue(new InstantCommand(() -> m_deliverySubsystem.ToggleDeliveryArmClamp()));
+      .onTrue(new InstantCommand(() -> m_deliverySubsystem.ToggleDeliveryArmClamp()));
 
     new JoystickButton(m_secondCodriverController, 2)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
@@ -167,7 +167,8 @@ public class RobotContainer {
     new JoystickButton(m_secondCodriverController, 3)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
     
-    
+    new JoystickButton(m_secondCodriverController, 4)
+      .onTrue(new ExtendDeliveryArmCommand(20000.0));
 
 
   }

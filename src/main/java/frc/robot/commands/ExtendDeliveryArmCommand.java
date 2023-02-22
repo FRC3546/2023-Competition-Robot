@@ -33,17 +33,17 @@ public class ExtendDeliveryArmCommand extends CommandBase{
 
   @Override
   public void initialize() {
+    System.out.println("initializing Extend Delivery Arm Command");
     m_deliveryArmSubsystem.Release();
 
-    if (endPosition > m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+    if (m_deliveryArmSubsystem.GetDeliveryArmPosition() < endPosition){
         isLower = true;
         m_deliveryArmSubsystem.SetDeliveryArmSpeed(.3);
     }
-    else if (endPosition < m_deliveryArmSubsystem.GetDeliveryArmPosition()){
+    else if (m_deliveryArmSubsystem.GetDeliveryArmPosition() > endPosition){
       isLower = false;
       m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.3);
     }
-
     else{
       System.out.println("Error in ExtendDeliveryArmCommand initialize()");
     }
