@@ -55,7 +55,7 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    
+    m_deliverySubsystem.ZeroEncoder();
 
     m_drivetrainSubsystem.register();
     m_flipperSubsystem.register();

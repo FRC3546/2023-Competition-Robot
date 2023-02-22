@@ -32,7 +32,7 @@ public class DeliveryArmSubsystem extends SubsystemBase{
     
     public DeliveryArmSubsystem() {
         StopSolenoid.set(Value.kForward);
-        extendingArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        extendingArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     }
 
 
@@ -94,6 +94,10 @@ public class DeliveryArmSubsystem extends SubsystemBase{
     public void SetDeliveryArmSpeed(double speed){
         extendingArmMotor.set(ControlMode.PercentOutput, speed);
         // something is needed to tell the motor to stop
+    }
+
+    public void ZeroEncoder(){
+        extendingArmMotor.setSelectedSensorPosition(0);
     }
 
     @Override
