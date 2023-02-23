@@ -91,8 +91,8 @@ public class RobotContainer {
   private void configureBindings() {
 
     // driver drivetrain buttons
-    // new JoystickButton(m_driverController, OperatorConstants.kResetGyroEncoderButton)
-    //   .onTrue(new ResetGyroResetEncoders());
+    new JoystickButton(m_driverController, 1)
+      .onTrue(new ResetGyroResetEncoders());
 
 
     // // codriver flipper buttons
