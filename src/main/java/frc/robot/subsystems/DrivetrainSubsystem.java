@@ -120,7 +120,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public Rotation2d getRotation() {
         //return odometry.getPoseMeters().getRotation();
-        return Rotation2d.fromDegrees(gyroscope.getYaw());
+        return Rotation2d.fromDegrees(-gyroscope.getYaw());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
