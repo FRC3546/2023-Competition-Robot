@@ -15,9 +15,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 // command groups
-import frc.robot.commandgroups.PickUpGamepieceCommand;
+import frc.robot.commandgroups.LowerOpenFlipperCommand;
 import frc.robot.commandgroups.ResetGyroResetEncoders;
 
 // commands
@@ -26,9 +27,9 @@ import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.MoveFlipperCommand;
 import frc.robot.commands.JoystickExtendDeliveryArmCommand;
 import frc.robot.commands.JoystickMoveFlipperCommand;
+import frc.robot.commands.PrinterCommand;
 
 // subsystems
-import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.FlipperSubsystem;
 
@@ -36,6 +37,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -91,7 +93,7 @@ public class RobotContainer {
   private void configureBindings() {
 
     // driver drivetrain buttons
-    new JoystickButton(m_driverController, 1)
+    new JoystickButton(m_codriverController, 11)
       .onTrue(new ResetGyroResetEncoders());
 
 
@@ -169,6 +171,8 @@ public class RobotContainer {
     
     new JoystickButton(m_secondCodriverController, 4)
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
+
+    new JoystickButton(m_secondCodriverController, 5).onTrue(new PrinterCommand());
 
 
   }

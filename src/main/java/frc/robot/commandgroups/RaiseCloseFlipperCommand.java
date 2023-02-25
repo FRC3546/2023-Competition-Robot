@@ -10,18 +10,19 @@ import frc.robot.RobotContainer;
 
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.MoveFlipperCommand;
-
+import frc.robot.commands.PauseCommand;
 import frc.robot.subsystems.FlipperSubsystem;
 
 
-public class PickUpGamepieceCommand extends SequentialCommandGroup{
+public class RaiseCloseFlipperCommand extends SequentialCommandGroup{
 
-    public PickUpGamepieceCommand(){
+    public RaiseCloseFlipperCommand(){
         
 
         addCommands(
-            new InstantCommand(() -> RobotContainer.m_flipperSubsystem.OpenFlipperClamp()), // Opens flipper
-            new MoveFlipperCommand(Constants.flipperArmDown) // Lowers flipper
+            new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()), // closes flipper
+            new PauseCommand(0.5),
+            new MoveFlipperCommand(Constants.flipperArmUp) // raises flipper
         );
         
 

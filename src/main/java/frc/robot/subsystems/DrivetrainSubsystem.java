@@ -110,20 +110,25 @@ public class DrivetrainSubsystem extends SubsystemBase {
         shuffleboardTab.addNumber("Pose Y", () -> odometry.getPoseMeters().getY());
     }
 
-    public void zeroGyroscope() {
-        odometry.resetPosition(
-                Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
-                new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() },
-                new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0))
-        );
-    }
+//     public void zeroGyroscope() {
+//         odometry.resetPosition(
+//                 Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
+//                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() },
+//                 new Pose2d(odometry.getPoseMeters().getTranslation(), Rotation2d.fromDegrees(0.0))
+//         );
+//     }
 
     public Rotation2d getRotation() {
-        return odometry.getPoseMeters().getRotation();
+        //return odometry.getPoseMeters().getRotation();
+        return Rotation2d.fromDegrees(gyroscope.getYaw());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
         this.chassisSpeeds = chassisSpeeds;
+    }
+
+    public void zeroGyroscope(){
+        gyroscope.zeroYaw();
     }
 
     @Override
