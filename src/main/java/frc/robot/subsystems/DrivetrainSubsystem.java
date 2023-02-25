@@ -25,6 +25,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 public class DrivetrainSubsystem extends SubsystemBase {
     private static final double MAX_VOLTAGE = 12.0;
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 4.14528;
@@ -36,7 +39,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final SwerveModule backLeftModule;
     private final SwerveModule backRightModule;
 
-    private final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
+    public double offset = 0;
+
+
+
+    public static final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
     
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -49,7 +56,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-    public DrivetrainSubsystem() {
+     {
 
 
 
@@ -101,13 +108,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         odometry = new SwerveDriveOdometry(
                 kinematics,
-                Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
+                Rotation2d.fromDegrees(getGyroFusedOffset()),
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
+
 
         shuffleboardTab.addNumber("Gyroscope Angle", () -> getRotation().getDegrees());
         shuffleboardTab.addNumber("Pose X", () -> odometry.getPoseMeters().getX());
         shuffleboardTab.addNumber("Pose Y", () -> odometry.getPoseMeters().getY());
+
     }
 
 //     public void zeroGyroscope() {
@@ -120,7 +129,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public Rotation2d getRotation() {
         //return odometry.getPoseMeters().getRotation();
-        return Rotation2d.fromDegrees(-gyroscope.getYaw());
+        return Rotation2d.fromDegrees(-getGyroYawOffset());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -131,10 +140,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
         gyroscope.zeroYaw();
     }
 
+    public void setGyroOffset(double offset){
+        this.offset = offset;
+    }
+
+    public double getGyroFusedOffset(){
+        return gyroscope.getFusedHeading() + offset;
+    }
+
+    public double getGyroYawOffset(){
+        return gyroscope.getYaw() + offset;
+    }
+
     @Override
     public void periodic() {
         odometry.update(
-                Rotation2d.fromDegrees(-gyroscope.getFusedHeading()),
+                Rotation2d.fromDegrees(-getGyroFusedOffset()),
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);

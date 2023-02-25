@@ -19,20 +19,20 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.commands.PauseCommand;
 
 
-public class testAuto extends SequentialCommandGroup{
+public class SimpleAuto extends SequentialCommandGroup{
 
     DoubleSupplier x = () -> 0;
     DoubleSupplier y = () -> .3;
     DoubleSupplier rot = () -> 0;
 
 
-    public testAuto(){
+    public SimpleAuto(){
         
 
         addCommands(
-        new ParallelDeadlineGroup(
-            new PauseCommand(1), 
-            new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)));
+            new MoveFlipperCommand(0)
+        
+        );
         
         
 

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import frc.robot.commandgroups.DeliveryArmTransfer;
 // command groups
 import frc.robot.commandgroups.LowerOpenFlipperCommand;
 import frc.robot.commandgroups.ResetGyroResetEncoders;
@@ -27,7 +27,6 @@ import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.MoveFlipperCommand;
 import frc.robot.commands.JoystickExtendDeliveryArmCommand;
 import frc.robot.commands.JoystickMoveFlipperCommand;
-import frc.robot.commands.PrinterCommand;
 
 // subsystems
 import frc.robot.subsystems.DeliveryArmSubsystem;
@@ -56,6 +55,8 @@ public class RobotContainer {
   public static final Joystick m_secondCodriverController = new Joystick(OperatorConstants.ksecondCodriverControllerPort);
 
   public RobotContainer() {
+
+    m_drivetrainSubsystem.setGyroOffset(0);
 
     m_deliverySubsystem.ZeroEncoder();
 
@@ -152,6 +153,9 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))
       .onFalse(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
+    new JoystickButton(m_codriverController, 2)
+      .onTrue(new DeliveryArmTransfer());
+
 
 
 
@@ -172,7 +176,6 @@ public class RobotContainer {
     new JoystickButton(m_secondCodriverController, 4)
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
 
-    new JoystickButton(m_secondCodriverController, 5).onTrue(new PrinterCommand());
 
 
   }

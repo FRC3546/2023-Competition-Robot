@@ -85,5 +85,5 @@ public final class Constants {
   public static final double deliveryArmFullyRetracted = 0;
 
   public static final double flipperArmUp = .325;
-  public static final double flipperArmDown = 0.55331;
+  public static final double flipperArmDown = 0.55;
 }
