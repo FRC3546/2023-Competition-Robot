@@ -14,6 +14,11 @@ public final class Autos {
     return Commands.sequence(new ExtendDeliveryArmCommand(100));
   }
 
+  public static CommandBase moveAuto(){
+    return Commands.sequence(new DriveCommand(null, null, null, null))
+
+  }
+
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }

@@ -8,34 +8,24 @@ import frc.robot.Robot;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ExtendDeliveryArmCommand;
-import frc.robot.commands.MoveFlipperCommand;
+import frc.robot.commands.PauseCommand;
 
-import frc.robot.subsystems.FlipperSubsystem;
-
-import edu.wpi.first.wpilibj.Timer;
-
-
+// 1. Opens the delivery arm clamp
+// 2. Opens the flipper arm to transfer
+// 3. Pauses to allow everything to open
+// 4. closes the deviery arm clamp to pick up the gamepiece
 
 public class DeliveryArmTransfer extends SequentialCommandGroup{
 
-    private final Timer m_timer = new Timer();
 
     public DeliveryArmTransfer(){
         
-            new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp());
-            
-            m_timer.reset();
-            m_timer.start();
-
-            if (m_timer.get() < 1){
-                ;
-            }
-            else{
-                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp());
-                m_timer.stop();
-            }
+            addCommands(
+                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
+                new InstantCommand(() -> RobotContainer.m_flipperSubsystem.OpenFlipperClamp()),
+                new PauseCommand(0.5),
+                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp())   
+            );
     
     }
 

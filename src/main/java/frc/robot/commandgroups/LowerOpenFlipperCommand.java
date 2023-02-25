@@ -13,6 +13,8 @@ import frc.robot.commands.MoveFlipperCommand;
 
 import frc.robot.subsystems.FlipperSubsystem;
 
+// The flipper begins to open 
+// The flipper moves to the down position and the flipper should be open
 
 public class LowerOpenFlipperCommand extends SequentialCommandGroup{
 

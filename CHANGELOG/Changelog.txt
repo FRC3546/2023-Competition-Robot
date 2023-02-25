@@ -23,3 +23,7 @@ Also started mapping out a command for picking up the gamepiece.
 
 2/18/2023 JF Added button bindings for our subsystems, including a safety system for raising and lowering-
 the flipper. Added a command for performing a reset on our gyro and possibly the encoders.
+
+2/20/2023 JF Added Path Planner and Flipper encoder values along with buttons for testing functions
+of the robot.
+
