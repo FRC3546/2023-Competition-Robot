@@ -23,7 +23,7 @@ public class DeliveryArmTransfer extends SequentialCommandGroup{
             addCommands(
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp()),
-                new PauseCommand(0.6),
+                new PauseCommand(0.65),
                 new InstantCommand(() -> RobotContainer.m_flipperSubsystem.OpenFlipperClamp())
             );
     

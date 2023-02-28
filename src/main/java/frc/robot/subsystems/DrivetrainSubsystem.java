@@ -6,6 +6,9 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
@@ -25,6 +28,14 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
+import edu.wpi.first.math.controller.PIDController;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -41,6 +52,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double offset = 0;
 
+    private SwerveModuleState[] states;
 
 
     public static final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
@@ -127,6 +139,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
 //         );
 //     }
 
+private SwerveModulePosition[] getPositions() {
+        SwerveModulePosition[] swervePositions = {
+                frontLeftModule.getPosition(),
+                frontRightModule.getPosition(),
+                backLeftModule.getPosition(),
+                backRightModule.getPosition()
+        };
+        return swervePositions;
+    }
+
     public Rotation2d getRotation() {
         //return odometry.getPoseMeters().getRotation();
         return Rotation2d.fromDegrees(-getGyroYawOffset());
@@ -134,7 +156,36 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public void drive(ChassisSpeeds chassisSpeeds) {
         this.chassisSpeeds = chassisSpeeds;
+
+        states = kinematics.toSwerveModuleStates(chassisSpeeds);
+
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+
+        frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[0].angle.getRadians());
+        frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[1].angle.getRadians());
+        backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[2].angle.getRadians());
+        backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[3].angle.getRadians());
     }
+
+    public void drive(SwerveModuleState[] states) {
+     
+        // this.states = states;
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+
+        frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[0].angle.getRadians());
+        frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[1].angle.getRadians());
+        backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[2].angle.getRadians());
+        backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[3].angle.getRadians());
+    }
+
 
     public void zeroGyroscope(){
         gyroscope.zeroYaw();
@@ -152,6 +203,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return gyroscope.getYaw() + offset;
     }
 
+    public void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(pose.getRotation(),
+                getPositions(),
+                pose);
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    
+
     @Override
     public void periodic() {
         odometry.update(
@@ -165,4 +228,32 @@ public class DrivetrainSubsystem extends SubsystemBase {
         backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
         backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
     }
+
+    // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
+public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+        return new SequentialCommandGroup(
+             new InstantCommand(() -> {
+               // Reset odometry for the first path you run during auto
+               if(isFirstPath){
+                   this.resetOdometry(traj.getInitialHolonomicPose());
+               }
+             }),
+             new PPSwerveControllerCommand(
+                        traj,
+                        this::getPose, // Pose supplier
+                        this.kinematics, // SwerveDriveKinematics
+                        new PIDController(0, 0, 0), // X controller. Tune these values for your
+                                                                          // robot. Leaving them 0 will only use
+                                                                          // feedforwards.
+                        new PIDController(0, 0, 0), // Y controller (usually the same values as X
+                                                                           // controller)
+                        new PIDController(0, 0, 0), // Rotation controller. Tune these values
+                                                                              // for your robot. Leaving them 0 will
+                                                                              // only use feedforwards.
+                        this::drive, // Module states consumer
+                        true, // Should the path be automatically mirrored depending on alliance color.
+                              // Optional, defaults to true
+                        this // Requires this drive subsystem
+                ));
+        }
 }
