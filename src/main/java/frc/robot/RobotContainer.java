@@ -4,11 +4,18 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+import java.util.HashMap;
+import java.util.List;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
@@ -50,6 +57,13 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class RobotContainer {
 
+  SendableChooser<List<PathPlannerTrajectory>> autoChooser = new SendableChooser<>();
+  SwerveAutoBuilder autoBuilder;
+  List<PathPlannerTrajectory> selectedAuto;
+  SendableChooser<String> AllianceChooser = new SendableChooser<>();
+
+  HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
+
   // subsystem declarations
   public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   public static final FlipperSubsystem m_flipperSubsystem = new FlipperSubsystem();
@@ -68,6 +82,7 @@ public class RobotContainer {
 
     m_drivetrainSubsystem.register();
     m_flipperSubsystem.register();
+    
 
     // Teleop drivetrain movement
     m_drivetrainSubsystem.setDefaultCommand(new DriveCommand(
@@ -77,23 +92,13 @@ public class RobotContainer {
             () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    //m_deliverySubsystem.setDefaultCommand(new JoystickExtendDeliveryArmCommand(m_codriverController.getY()));
-
-    // m_flipperSubsystem.setDefaultCommand(new JoystickMoveFlipperCommand(-(m_codriverController.getY())));
-
-
-    // if (OperatorConstants.kFlipperIsManual == true && OperatorConstants.kArmIsManual != true){
-      
-    //   OperatorConstants.kArmIsManual = false;
-    // }
-    // else{
-      
-    //   OperatorConstants.kFlipperIsManual = false;
-    // }
-    
-
 
     configureBindings();
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    createAutoBuilder();
+    generatePathPlannerGroups();
   }
 
  
@@ -104,34 +109,6 @@ public class RobotContainer {
       .onTrue(new ResetGyroResetEncoders());
 
 
-    // // codriver flipper buttons
-    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperUpButton)
-    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
-    
-    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperDownButton)
-    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
-
-    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperToggleButton)
-    //   .toggleOnTrue(new PickUpGamepieceCommand());
-
-    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperDisableSafety)
-    //   .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = true));
-    
-    // new JoystickButton(m_codriverController, OperatorConstants.kFlipperEnableSafety)
-    //   .onTrue(new InstantCommand(() -> OperatorConstants.kFlipperIsManual = false));
-
-    // codriver arm buttons
-    // new JoystickButton(m_codriverController, OperatorConstants.kArmDisableSafety)
-    //   .onTrue(new InstantCommand(() -> OperatorConstants.kArmIsManual = true));
-
-    // new JoystickButton(m_codriverController, 1)
-    //   .onTrue(new InstantCommand(() -> m_deliverySubsystem.Stop()));
-
-    // new JoystickButton(m_codriverController, 3)
-    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.SetFlipperSpeed(0.3)));
-    
-    // new JoystickButton(m_codriverController, 5)
-    //   .onTrue(new InstantCommand(() -> m_flipperSubsystem.SetFlipperSpeed(-0.3)));
 
     // flipper arm clamp
     new JoystickButton(m_codriverController, 6)
@@ -165,11 +142,6 @@ public class RobotContainer {
 
 
 
-
-
-
-
-
     new JoystickButton(m_secondCodriverController, 1)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.ToggleDeliveryArmClamp()));
 
@@ -183,7 +155,10 @@ public class RobotContainer {
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
 
 
+  }
 
+  private Command generateAutoWithPathPlanner() {
+    return autoBuilder.fullAuto(autoChooser.getSelected());
   }
 
 
@@ -193,9 +168,38 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    
+    //return Autos.moveAuto();
+    return generateAutoWithPathPlanner();
+  }
 
-    // An example command will be run in autonomous
-    return Autos.moveAuto();
+  private void generatePathPlannerGroups(){
+    
+    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("NewNewPath", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
+
+    autoChooser.setDefaultOption("test path", testDrive);
+  }
+
+  private void createAutoBuilder() {
+
+    pathPlannerEventMap = new HashMap<>();
+
+    autoBuilder = new SwerveAutoBuilder(
+
+        m_drivetrainSubsystem::getPose, // Pose2d supplier
+        m_drivetrainSubsystem::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
+        m_drivetrainSubsystem.getKinematics(), // SwerveDriveKinematics
+        new PIDConstants(0.0, 0.0, 0.0), // PID constants to correct for translation error (used to
+                                                              // create the X and Y PID controllers)
+        new PIDConstants(0.0, 0.0, 0.0), // PID constants to correct for rotation error (used to
+                                                                 // create the rotation controller)
+        m_drivetrainSubsystem::drive, // Module states consumer used to output to the drive subsystem
+        pathPlannerEventMap,
+        true, // Should the path be automatically mirrored depending on alliance color.
+              // Optional, defaults to true
+        m_drivetrainSubsystem // The drive subsystem. Used to properly set the requirements of path following
+                              // commands
+    );
   }
 
   private static double deadband(double value, double deadband) {

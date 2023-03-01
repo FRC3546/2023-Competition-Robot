@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
+import com.revrobotics.CANSparkMax;
+
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
@@ -39,6 +41,7 @@ import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+
 public class DrivetrainSubsystem extends SubsystemBase {
     private static final double MAX_VOLTAGE = 12.0;
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 4.14528;
@@ -49,6 +52,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final SwerveModule frontRightModule;
     private final SwerveModule backLeftModule;
     private final SwerveModule backRightModule;
+
+        //Drive motors variables that cast to in the declarator of the modules
+    public final CANSparkMax frontLeftDriveMotor;
+    public final CANSparkMax frontRightDriveMotor;
+    public final CANSparkMax backLeftDriveMotor;
+    public final CANSparkMax backRightDriveMotor;
+        //Steering motor variables that we cast to in the declarator of the modules
+    public final CANSparkMax frontLeftSteerMotor;
+    public final CANSparkMax frontRightSteerMotor;
+    public final CANSparkMax backLeftSteerMotor;
+    public final CANSparkMax backRightSteerMotor;
 
     public double offset = 0;
 
@@ -69,8 +83,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
      {
-
-
 
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
@@ -129,7 +141,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
         shuffleboardTab.addNumber("Pose X", () -> odometry.getPoseMeters().getX());
         shuffleboardTab.addNumber("Pose Y", () -> odometry.getPoseMeters().getY());
 
+        frontLeftDriveMotor = (CANSparkMax) frontLeftModule.getDriveMotor();
+        frontRightDriveMotor = (CANSparkMax) frontRightModule.getDriveMotor();
+        backLeftDriveMotor = (CANSparkMax) backLeftModule.getDriveMotor();
+        backRightDriveMotor = (CANSparkMax) backRightModule.getDriveMotor();
+
+        frontLeftSteerMotor = (CANSparkMax) frontLeftModule.getSteerMotor();
+        frontRightSteerMotor = (CANSparkMax) frontRightModule.getSteerMotor();
+        backLeftSteerMotor = (CANSparkMax) backLeftModule.getSteerMotor();
+        backRightSteerMotor = (CANSparkMax) backRightModule.getSteerMotor();
     }
+
+    
 
 //     public void zeroGyroscope() {
 //         odometry.resetPosition(
@@ -213,8 +236,48 @@ private SwerveModulePosition[] getPositions() {
         return odometry.getPoseMeters();
     }
 
-    
+    public SwerveDriveKinematics getKinematics() {
+        return kinematics;
+    }
 
+    public void setSteerMotorBrake(boolean x){
+        
+        if (x == true){
+            frontLeftSteerMotor.setIdleMode(IdleMode.kBrake);
+            frontRightSteerMotor.setIdleMode(IdleMode.kBrake);
+            backLeftSteerMotor.setIdleMode(IdleMode.kBrake);
+            backRightSteerMotor.setIdleMode(IdleMode.kBrake);
+        }
+
+        if (x == false){
+            frontLeftSteerMotor.setIdleMode(IdleMode.kCoast);
+            frontRightSteerMotor.setIdleMode(IdleMode.kCoast);
+            backLeftSteerMotor.setIdleMode(IdleMode.kCoast);
+            backRightSteerMotor.setIdleMode(IdleMode.kCoast);    
+        }
+
+        else{
+            System.out.println("setSteerMotorMode value wrong");
+        }
+    }
+
+    public void setDriveMotorBrake(boolean x){
+        
+        if (x == true){
+            frontLeftDriveMotor.setIdleMode(IdleMode.kBrake);
+            frontRightDriveMotor.setIdleMode(IdleMode.kBrake);
+            backLeftDriveMotor.setIdleMode(IdleMode.kBrake);
+            backRightDriveMotor.setIdleMode(IdleMode.kBrake);
+        }
+        else{
+            frontLeftDriveMotor.setIdleMode(IdleMode.kCoast);
+            frontRightDriveMotor.setIdleMode(IdleMode.kCoast);
+            backLeftDriveMotor.setIdleMode(IdleMode.kCoast);
+            backRightDriveMotor.setIdleMode(IdleMode.kCoast);
+        }
+    }
+    
+    
     @Override
     public void periodic() {
         odometry.update(
