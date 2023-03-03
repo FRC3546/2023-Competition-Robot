@@ -175,7 +175,7 @@ public class RobotContainer {
 
   private void generatePathPlannerGroups(){
     
-    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("NewNewPath", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
+    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("PickUpGamePiece", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
 
     autoChooser.setDefaultOption("test path", testDrive);
   }
