@@ -19,7 +19,7 @@ import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-
+import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FlipperSubsystem;
@@ -91,6 +91,8 @@ public class RobotContainer {
             () -> -modifyAxis(m_driverController.getRawAxis(1)) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
+
+    m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_secondCodriverController.getRawAxis(1)));
 
 
     configureBindings();

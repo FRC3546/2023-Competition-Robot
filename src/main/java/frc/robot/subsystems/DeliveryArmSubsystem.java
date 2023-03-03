@@ -163,36 +163,36 @@ public class DeliveryArmSubsystem extends SubsystemBase{
         //     // Stop();
         // }
         
-        if(GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended
-         && GetDeliveryArmPosition() > Constants.deliveryArmFullyRetracted){
-            if((Math.abs(RobotContainer.m_secondCodriverController.getY())) > .1){
-                Release();
-            extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            // System.out.println("Within Bounds");
-            }
-            else{
-                extendingArmMotor.set(ControlMode.PercentOutput, 0);
-                Stop();
-            }
-         }
+        // if(GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended
+        //  && GetDeliveryArmPosition() > Constants.deliveryArmFullyRetracted){
+        //     if((Math.abs(RobotContainer.m_secondCodriverController.getY())) > .1){
+        //         Release();
+        //     extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+        //     // System.out.println("Within Bounds");
+        //     }
+        //     else{
+        //         extendingArmMotor.set(ControlMode.PercentOutput, 0);
+        //         Stop();
+        //     }
+        //  }
 
-        else if(GetDeliveryArmPosition() >= Constants.deliveryArmFullyExtended && -RobotContainer.m_secondCodriverController.getY() < -0.1){
-            Release();
-            extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            // System.out.println("Too far coming back");
-        }
+        // else if(GetDeliveryArmPosition() >= Constants.deliveryArmFullyExtended && -RobotContainer.m_secondCodriverController.getY() < -0.1){
+        //     Release();
+        //     extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+        //     // System.out.println("Too far coming back");
+        // }
 
-        else if(GetDeliveryArmPosition() <= Constants.deliveryArmFullyRetracted && -RobotContainer.m_secondCodriverController.getY() > 0.1){
-            Release();
-            extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
-            // System.out.println("Too short coming back");
-        }
+        // else if(GetDeliveryArmPosition() <= Constants.deliveryArmFullyRetracted && -RobotContainer.m_secondCodriverController.getY() > 0.1){
+        //     Release();
+        //     extendingArmMotor.set(ControlMode.PercentOutput, -RobotContainer.m_secondCodriverController.getY());
+        //     // System.out.println("Too short coming back");
+        // }
 
-        else{
-            extendingArmMotor.set(ControlMode.PercentOutput, 0);
-            Stop();
-            // System.out.println("Out of bounds");
-        }
+        // else{
+        //     extendingArmMotor.set(ControlMode.PercentOutput, 0);
+        //     Stop();
+        //     // System.out.println("Out of bounds");
+        // }
 
     }
 }

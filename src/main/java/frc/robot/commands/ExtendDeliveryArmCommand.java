@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ExtendDeliveryArmCommand extends CommandBase{
     
-  private final DeliveryArmSubsystem m_deliveryArmSubsystem;
+  private final DeliveryArmSubsystem m_deliveryArmSubsystem = RobotContainer.m_deliverySubsystem;
 
   private double endPosition;
   private boolean isLower;
@@ -25,10 +25,10 @@ public class ExtendDeliveryArmCommand extends CommandBase{
    * @param subsystem The subsystem used by this command.
    */
   public ExtendDeliveryArmCommand(double endPosition) {
-    m_deliveryArmSubsystem = RobotContainer.m_deliverySubsystem;    
+    System.out.println("Created extend delivery arm command");  
     this.endPosition = endPosition;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_deliveryArmSubsystem);
+    addRequirements(RobotContainer.m_deliverySubsystem);
   }
 
   @Override
@@ -38,11 +38,13 @@ public class ExtendDeliveryArmCommand extends CommandBase{
 
     if (m_deliveryArmSubsystem.GetDeliveryArmPosition() < endPosition){
         isLower = true;
-        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.3);
+        System.out.println("set speed .5");
+        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.5);
     }
     else if (m_deliveryArmSubsystem.GetDeliveryArmPosition() > endPosition){
       isLower = false;
-      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.3);
+      System.out.println("set speed -.5");
+      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.5);
     }
     else{
       System.out.println("Error in ExtendDeliveryArmCommand initialize()");
@@ -50,10 +52,13 @@ public class ExtendDeliveryArmCommand extends CommandBase{
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+
+  }
 
   @Override
   public void end(boolean interrupted) {
+    System.out.println("Extend Delviery arm ended");
     m_deliveryArmSubsystem.SetDeliveryArmSpeed(0);
     m_deliveryArmSubsystem.Stop();
   }
