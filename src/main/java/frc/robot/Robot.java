@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
     RobotContainer.m_drivetrainSubsystem.setDriveMotorBrake(true);
     RobotContainer.m_drivetrainSubsystem.setSteerMotorBrake(true);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    new InstantCommand(() -> RobotContainer.m_drivetrainSubsystem.setGyroOffset(0));
+    RobotContainer.m_drivetrainSubsystem.setGyroOffset(-180);
 
 
     // schedule the autonomous command (example)
@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    new InstantCommand(() -> RobotContainer.m_drivetrainSubsystem.setGyroOffset(-90));
+    RobotContainer.m_drivetrainSubsystem.setGyroOffset(-90);
     new InstantCommand(() -> RobotContainer.m_deliverySubsystem.Stop());
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

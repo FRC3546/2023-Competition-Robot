@@ -64,7 +64,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public final CANSparkMax backLeftSteerMotor;
     public final CANSparkMax backRightSteerMotor;
 
-    public double offset = 0;
+    public double offset = -90;
 
     private SwerveModuleState[] states;
 
