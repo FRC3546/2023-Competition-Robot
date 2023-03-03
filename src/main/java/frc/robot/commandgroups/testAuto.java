@@ -32,7 +32,7 @@ public class testAuto extends SequentialCommandGroup{
         addCommands(
         new ParallelDeadlineGroup(
             new PauseCommand(1), 
-            new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)));
+            new DriveCommand(RobotContainer.m_drivetrainSubsystem, x, y, rot)));
         
         
 
