@@ -76,7 +76,7 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    m_drivetrainSubsystem.setGyroOffset(-90);
+    m_drivetrainSubsystem.setGyroOffset(0);
 
     m_deliverySubsystem.ZeroEncoder();
 
@@ -89,7 +89,7 @@ public class RobotContainer {
             m_drivetrainSubsystem,
             () -> -modifyAxis(m_driverController.getRawAxis(0)) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getRawAxis(1)) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+            () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
 
@@ -175,7 +175,7 @@ public class RobotContainer {
 
   private void generatePathPlannerGroups(){
     
-    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("PickUpGamePiece", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
+    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("NewNewPath", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
 
     autoChooser.setDefaultOption("test path", testDrive);
   }
