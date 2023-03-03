@@ -76,7 +76,7 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    m_drivetrainSubsystem.setGyroOffset(0);
+    m_drivetrainSubsystem.setGyroOffset(-90);
 
     m_deliverySubsystem.ZeroEncoder();
 
