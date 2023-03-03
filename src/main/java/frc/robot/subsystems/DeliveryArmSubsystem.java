@@ -21,68 +21,77 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     private DoubleSolenoid DeliveryArmClampSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
 
-    private boolean DeliveryArmClampOpen = false;
+    private int DeliveryArmClampOpen; // 1=true, 0=false, 2=off
 
     private DoubleSolenoid StopSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
-    private boolean stopped;
+    private int stopped; // 1=true, 0=false, 2=off
 
     private TalonSRX extendingArmMotor = new TalonSRX(41);
     //private boolean deliveryArmExtended = false;
 
     
     public DeliveryArmSubsystem() {
-        StopSolenoid.set(Value.kForward);
+        Stop();
+
         extendingArmMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     }
 
 
     public void OpenDeliveryArmClamp(){
         DeliveryArmClampSolenoid.set(Value.kForward);
-        DeliveryArmClampOpen = true;
+        // DeliveryArmClampOpen = 1;
     }
 
 
     public void CloseDeliveryArmClamp(){
         DeliveryArmClampSolenoid.set(Value.kReverse);
-        DeliveryArmClampOpen = false;
+        // DeliveryArmClampOpen = 0;
     } 
 
     
     public void ToggleDeliveryArmClamp(){
 
-        if(DeliveryArmClampOpen == true){
-            DeliveryArmClampOpen = false;
+        // if(DeliveryArmClampOpen == 1){
+        //     DeliveryArmClampOpen = 0;
+
+        // }
+
+        // else if(DeliveryArmClampOpen == 0){
+        //     DeliveryArmClampOpen = 1;
+        // }
+
+        if (DeliveryArmClampOpen == 1 || DeliveryArmClampOpen == 0){
+            DeliveryArmClampSolenoid.toggle();
+        }
+        else{
+            OpenDeliveryArmClamp();            
         }
 
-        else if(DeliveryArmClampOpen == false){
-            DeliveryArmClampOpen = true;
-        }
 
-        DeliveryArmClampSolenoid.toggle();
     }
 
 
     public void Stop(){
-        stopped = true;
+        // stopped = 1;
         StopSolenoid.set(Value.kReverse);
     }
 
 
     public void Release(){
-        stopped = false;
+        // stopped = 0;
         StopSolenoid.set(Value.kForward);
     }
 
     public void ToggleStop(){
-        if(stopped == true){
-            stopped = false;
-        }
+        // if(stopped == 1){
+        //     stopped = 0;
+        // }
 
-        else if(stopped == false){
-            stopped = true;
-        }
+        // else if(stopped == 0){
+        //     stopped = 1;
+        // }
+        StopSolenoid.toggle();
 
-        DeliveryArmClampSolenoid.toggle();
     }
 
 
@@ -102,6 +111,28 @@ public class DeliveryArmSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
+
+        if (StopSolenoid.get() == Value.kReverse){
+            stopped = 1;
+        }
+        else if(StopSolenoid.get() == Value.kForward){
+            stopped = 0;
+        }
+        else if(StopSolenoid.get() == Value.kOff){
+            stopped = 2;
+        }
+
+        if (DeliveryArmClampSolenoid.get() == Value.kReverse){
+            DeliveryArmClampOpen = 0;
+        }
+        else if(DeliveryArmClampSolenoid.get() == Value.kForward){
+            DeliveryArmClampOpen = 1;
+        }
+        else if (DeliveryArmClampSolenoid.get() == Value.kOff){
+            DeliveryArmClampOpen = 2;
+
+        }
+
         // System.out.println(extendingArmMotor.getSelectedSensorPosition());
         
         // if(GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended && 
