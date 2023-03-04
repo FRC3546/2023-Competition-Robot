@@ -39,12 +39,12 @@ public class ExtendDeliveryArmCommand extends CommandBase{
     if (m_deliveryArmSubsystem.GetDeliveryArmPosition() < endPosition){
         isLower = true;
         System.out.println("set speed .5");
-        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.5);
+        m_deliveryArmSubsystem.SetDeliveryArmSpeed(.9);
     }
     else if (m_deliveryArmSubsystem.GetDeliveryArmPosition() > endPosition){
       isLower = false;
       System.out.println("set speed -.5");
-      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.5);
+      m_deliveryArmSubsystem.SetDeliveryArmSpeed(-0.9);
     }
     else{
       System.out.println("Error in ExtendDeliveryArmCommand initialize()");
