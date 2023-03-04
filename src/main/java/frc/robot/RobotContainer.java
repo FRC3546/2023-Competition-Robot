@@ -174,17 +174,17 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     
-    //return Autos.moveAuto();
-    return generateAutoWithPathPlanner();
+    return Autos.moveAuto();
+    //return generateAutoWithPathPlanner();
   }
 
   private void generatePathPlannerGroups(){
     
-    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("PickAndPlace", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
+    List<PathPlannerTrajectory> testDrive = PathPlanner.loadPathGroup("LeaveCommunity", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
 
     autoChooser.setDefaultOption("test path", testDrive);
   }
-
+  
   private void createAutoBuilder() {
 
     pathPlannerEventMap = new HashMap<>();

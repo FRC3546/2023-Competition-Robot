@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.DeliveryArmSubsystem;
+import frc.robot.autos.DropAndLeaveAuto;
 import frc.robot.commandgroups.testAuto;
 
 public final class Autos {
@@ -16,7 +17,7 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    return new testAuto();
+    return new DropAndLeaveAuto();
   }
 
   private Autos() {
