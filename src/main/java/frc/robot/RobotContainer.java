@@ -40,6 +40,7 @@ import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.MoveFlipperCommand;
 import frc.robot.commands.JoystickExtendDeliveryArmCommand;
 import frc.robot.commands.JoystickMoveFlipperCommand;
+import frc.robot.commands.FlipperArmCommand;
 
 // subsystems
 import frc.robot.subsystems.DeliveryArmSubsystem;
@@ -93,6 +94,8 @@ public class RobotContainer {
     ));
 
     m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_secondCodriverController.getRawAxis(1)));
+
+    m_flipperSubsystem.setDefaultCommand(new FlipperArmCommand(() -> m_codriverController.getRawAxis(1)));
 
 
     configureBindings();
