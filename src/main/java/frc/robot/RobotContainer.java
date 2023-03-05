@@ -72,8 +72,9 @@ public class RobotContainer {
 
   // controllers
   public final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
-  public static final Joystick m_codriverController = new Joystick(OperatorConstants.kcodriverControllerPort);
-  public static final Joystick m_secondCodriverController = new Joystick(OperatorConstants.ksecondCodriverControllerPort);
+  public static final Joystick m_armController = new Joystick(OperatorConstants.kArmControllerPort);
+  public static final Joystick m_flipperController = new Joystick(OperatorConstants.kFlipperControllerPort);
+
 
   public RobotContainer() {
 
@@ -93,9 +94,9 @@ public class RobotContainer {
             () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_secondCodriverController.getRawAxis(1)));
+    m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_armController.getRawAxis(1)));
 
-    m_flipperSubsystem.setDefaultCommand(new FlipperArmCommand(() -> m_codriverController.getRawAxis(1)));
+    m_flipperSubsystem.setDefaultCommand(new FlipperArmCommand(() -> m_flipperController.getRawAxis(1)));
 
 
     configureBindings();
@@ -110,53 +111,53 @@ public class RobotContainer {
   private void configureBindings() {
 
     // driver drivetrain buttons
-    new JoystickButton(m_codriverController, 11)
+    new JoystickButton(m_flipperController, 11)
       .onTrue(new ResetGyroResetEncoders());
 
 
 
     // flipper arm clamp
-    new JoystickButton(m_codriverController, 6)
+    new JoystickButton(m_flipperController, 6)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
 
-    new JoystickButton(m_codriverController, 4)
+    new JoystickButton(m_flipperController, 4)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
     // delivery arm clamp
-    new JoystickButton(m_codriverController, 5)
+    new JoystickButton(m_flipperController, 5)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
     
-    new JoystickButton(m_codriverController, 3)
+    new JoystickButton(m_flipperController, 3)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
 
 
     
-    new JoystickButton(m_codriverController, 9)
+    new JoystickButton(m_flipperController, 9)
       .onTrue(new MoveFlipperCommand(Constants.flipperArmDown));
 
-    new JoystickButton(m_codriverController, 10)
+    new JoystickButton(m_flipperController, 10)
       .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
 
-    new JoystickButton(m_codriverController, 1)
+    new JoystickButton(m_flipperController, 1)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))
       .onFalse(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
-    new JoystickButton(m_codriverController, 2)
+    new JoystickButton(m_flipperController, 2)
       .onTrue(new DeliveryArmTransfer());
 
 
 
 
-    new JoystickButton(m_secondCodriverController, 1)
+    new JoystickButton(m_armController, 1)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.ToggleDeliveryArmClamp()));
 
-    new JoystickButton(m_secondCodriverController, 2)
+    new JoystickButton(m_armController, 2)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
     
-    new JoystickButton(m_secondCodriverController, 3)
+    new JoystickButton(m_armController, 3)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
     
-    new JoystickButton(m_secondCodriverController, 4)
+    new JoystickButton(m_armController, 4)
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
 
 

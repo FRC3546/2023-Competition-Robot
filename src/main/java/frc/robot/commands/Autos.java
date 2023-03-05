@@ -7,8 +7,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.DeliveryArmSubsystem;
-import frc.robot.autos.DropAndLeaveAuto;
-import frc.robot.commandgroups.testAuto;
+import frc.robot.Constants;
+import frc.robot.autos.DeployGamepieceAuto;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
@@ -17,7 +17,7 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    return new DropAndLeaveAuto();
+    return new DeployGamepieceAuto(Constants.cubeHigh, 100);
   }
 
   private Autos() {

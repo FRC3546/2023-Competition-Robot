@@ -16,8 +16,8 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final int kcodriverControllerPort = 1;
-    public static final int ksecondCodriverControllerPort = 2;
+    public static final int kArmControllerPort = 1;
+    public static final int kFlipperControllerPort = 2;
 
     // driver buttons
     public static final int kResetGyroEncoderButton = 1;
@@ -84,6 +84,16 @@ public final class Constants {
 
   public static final double deliveryArmFullyExtended = 55500;
   public static final double deliveryArmFullyRetracted = 0;
+
+
+  public static final double coneHigh = 55500;
+  public static final double coneMiddle = 30000;
+  public static final double coneLow = 10000;
+
+  public static final double cubeHigh = 55500;
+  public static final double cubeMiddle = 30000;
+  public static final double cubeLow = 10000;
+
 
   public static final double flipperArmUp = .325;
   public static final double flipperArmDown = 0.55;

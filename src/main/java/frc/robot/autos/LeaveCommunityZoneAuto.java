@@ -19,21 +19,15 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 
-public class DropAndLeaveAuto extends SequentialCommandGroup{
+public class LeaveCommunityZoneAuto extends SequentialCommandGroup{
 
-    PathPlannerTrajectory testDrive = PathPlanner.loadPath("hi", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
+    PathPlannerTrajectory path = PathPlanner.loadPath("LeaveCommunity", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
 
-    public DropAndLeaveAuto(){
+    public LeaveCommunityZoneAuto(){
         
             addCommands(
-                new DeliveryArmTransfer(),
-                new PauseCommand(0.5),
-                new ExtendDeliveryArmCommand(42200),
-                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
-                new PauseCommand(1),
-                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp()),
-                new ExtendDeliveryArmCommand(100)
-                
+                new InstantCommand(() -> 
+                RobotContainer.m_drivetrainSubsystem.followTrajectoryCommand(path, isFinished()))
                 );
     
     }
