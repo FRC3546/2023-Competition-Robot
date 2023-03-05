@@ -38,11 +38,11 @@ public class FlipperArmCommand extends CommandBase{
                 m_flipperSubsystem.SetFlipperSpeed(flipperMotorValue.getAsDouble());
                 // System.out.println("In bounds");
             }
-            else if(m_flipperSubsystem.GetFlipperPosition() > Constants.flipperArmDown && RobotContainer.m_codriverController.getY() > 0.1){
+            else if(m_flipperSubsystem.GetFlipperPosition() > Constants.flipperArmDown && RobotContainer.m_flipperController.getY() > 0.1){
                 m_flipperSubsystem.SetFlipperSpeed(flipperMotorValue.getAsDouble());
                 // System.out.println("Too Low out of bounds Increasing");
             }
-            else if(m_flipperSubsystem.GetFlipperPosition() < Constants.flipperArmUp && RobotContainer.m_codriverController.getY() < -.1){
+            else if(m_flipperSubsystem.GetFlipperPosition() < Constants.flipperArmUp && RobotContainer.m_flipperController.getY() < -.1){
                 m_flipperSubsystem.SetFlipperSpeed(flipperMotorValue.getAsDouble());
                 // System.out.println("Too High out of bounds Increasing");
             }

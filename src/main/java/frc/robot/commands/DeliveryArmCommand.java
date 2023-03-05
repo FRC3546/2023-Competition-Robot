@@ -30,7 +30,7 @@ public class DeliveryArmCommand extends CommandBase{
     public void execute(){
         if(m_deliveryArmSubsystem.GetDeliveryArmPosition() < Constants.deliveryArmFullyExtended
          && m_deliveryArmSubsystem.GetDeliveryArmPosition() > Constants.deliveryArmFullyRetracted){
-            if((Math.abs(RobotContainer.m_secondCodriverController.getY())) > .1){
+            if((Math.abs(RobotContainer.m_armController.getY())) > .1){
                 m_deliveryArmSubsystem.Release();
                 m_deliveryArmSubsystem.SetDeliveryArmSpeed(-armMotorValue.getAsDouble());
             // System.out.println("Within Bounds");
@@ -41,13 +41,13 @@ public class DeliveryArmCommand extends CommandBase{
             }
          }
 
-        else if(m_deliveryArmSubsystem.GetDeliveryArmPosition() >= Constants.deliveryArmFullyExtended && -RobotContainer.m_secondCodriverController.getY() < -0.1){
+        else if(m_deliveryArmSubsystem.GetDeliveryArmPosition() >= Constants.deliveryArmFullyExtended && -RobotContainer.m_armController.getY() < -0.1){
             m_deliveryArmSubsystem.Release();
             m_deliveryArmSubsystem.SetDeliveryArmSpeed(-armMotorValue.getAsDouble());
             // System.out.println("Too far coming back");
         }
 
-        else if(m_deliveryArmSubsystem.GetDeliveryArmPosition() <= Constants.deliveryArmFullyRetracted && -RobotContainer.m_secondCodriverController.getY() > 0.1){
+        else if(m_deliveryArmSubsystem.GetDeliveryArmPosition() <= Constants.deliveryArmFullyRetracted && -RobotContainer.m_armController.getY() > 0.1){
             m_deliveryArmSubsystem.Release();
             m_deliveryArmSubsystem.SetDeliveryArmSpeed(-armMotorValue.getAsDouble());
             // System.out.println("Too short coming back");
