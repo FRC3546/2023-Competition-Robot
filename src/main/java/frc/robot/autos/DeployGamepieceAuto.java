@@ -30,7 +30,7 @@ public class DeployGamepieceAuto extends SequentialCommandGroup{
                 new PauseCommand(0.5),
                 new ExtendDeliveryArmCommand(deployPosition),
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
-                new PauseCommand(2),
+                new PauseCommand(0.5),
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp()),
                 new ExtendDeliveryArmCommand(endPosition)
                 

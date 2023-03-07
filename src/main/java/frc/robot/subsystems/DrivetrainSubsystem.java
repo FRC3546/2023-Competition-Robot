@@ -130,11 +130,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 .withSteerOffset(Constants.BACK_RIGHT_MODULE_STEER_OFFSET)
                 .build();
 
-        odometry = new SwerveDriveOdometry(
-                kinematics,
-                Rotation2d.fromDegrees(getGyroFusedOffset()),
-                new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
-        );
+                odometry = new SwerveDriveOdometry(
+                        kinematics,
+                        Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
+                        new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
+                );
 
 
         shuffleboardTab.addNumber("Gyroscope Angle", () -> getRotation().getDegrees());
@@ -174,7 +174,7 @@ private SwerveModulePosition[] getPositions() {
 
     public Rotation2d getRotation() {
         //return odometry.getPoseMeters().getRotation();
-        return Rotation2d.fromDegrees(-getGyroYawOffset());
+        return Rotation2d.fromDegrees(gyroscope.getYaw());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -196,7 +196,7 @@ private SwerveModulePosition[] getPositions() {
 
     public void drive(SwerveModuleState[] states) {
      
-        // this.states = states;
+        //this.states = states;
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
         frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
@@ -281,7 +281,7 @@ private SwerveModulePosition[] getPositions() {
     @Override
     public void periodic() {
         odometry.update(
-                Rotation2d.fromDegrees(getGyroFusedOffset()),//might be negative
+                Rotation2d.fromDegrees(gyroscope.getFusedHeading()),//might be negative
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);

@@ -17,7 +17,7 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    return new DeployGamepieceAuto(Constants.cubeHigh, 100);
+    return new DeployGamepieceAuto(Constants.cubeMiddle, 100);
   }
 
   private Autos() {

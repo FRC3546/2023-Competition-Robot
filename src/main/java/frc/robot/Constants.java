@@ -87,11 +87,11 @@ public final class Constants {
 
 
   public static final double coneHigh = 55500;
-  public static final double coneMiddle = 30000;
+  public static final double coneMiddle = 37228;
   public static final double coneLow = 10000;
 
   public static final double cubeHigh = 55500;
-  public static final double cubeMiddle = 30000;
+  public static final double cubeMiddle = 37228;
   public static final double cubeLow = 10000;
 
 
