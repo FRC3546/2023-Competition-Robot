@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.Constants;
+import frc.robot.autos.DeployGamepieceAndLeaveAuto;
 import frc.robot.autos.DeployGamepieceAuto;
 
 public final class Autos {
@@ -17,7 +18,7 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    return new DeployGamepieceAuto(Constants.cubeMiddle, 100);
+    return new DeployGamepieceAndLeaveAuto(Constants.coneMiddle, 100);
   }
 
   private Autos() {
