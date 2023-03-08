@@ -28,7 +28,7 @@ import java.util.function.DoubleSupplier;
 public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
 
     DoubleSupplier x = () -> 0;
-    DoubleSupplier y = () -> 0.3;
+    DoubleSupplier y = () -> -0.3;
     DoubleSupplier rot = () -> 0;
 
     public DeployGamepieceAndLeaveAuto(double deployPosition, double endPosition){
