@@ -160,9 +160,9 @@ public class RobotContainer {
     new JoystickButton(m_armController, 4)
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
     
-    new JoystickButton(m_armController, 5)
-      .onTrue(new DeliveryArmCommand(() -> m_armController.getRawAxis(0), false))
-      .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(0), true))
+    new JoystickButton(m_armController, 10)
+      .onTrue(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), false))
+      .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), true))
       .onFalse(new InstantCommand(() -> m_deliverySubsystem.ZeroEncoder()));
 
   }

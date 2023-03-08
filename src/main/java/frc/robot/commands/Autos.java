@@ -18,7 +18,7 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    return new DeployGamepieceAndLeaveAuto(Constants.coneMiddle, 100);
+    return new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100);
   }
 
   private Autos() {

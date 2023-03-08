@@ -27,8 +27,10 @@ import java.util.function.DoubleSupplier;
 
 public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
 
+    DoubleSupplier moveForward = () -> 0.2;
+
     DoubleSupplier x = () -> 0;
-    DoubleSupplier y = () -> -0.3;
+    DoubleSupplier y = () -> -0.2;
     DoubleSupplier rot = () -> 0;
 
     public DeployGamepieceAndLeaveAuto(double deployPosition, double endPosition){
@@ -37,6 +39,12 @@ public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
                 new DeliveryArmTransfer(),
                 new PauseCommand(0.9),
                 new ExtendDeliveryArmCommand(deployPosition),
+                
+                new ParallelDeadlineGroup(
+                    new PauseCommand(1),
+                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
+                ),
+
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
                 new PauseCommand(0.5),
                 new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),

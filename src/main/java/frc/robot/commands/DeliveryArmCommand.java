@@ -21,7 +21,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class DeliveryArmCommand extends CommandBase{
     private final DoubleSupplier armMotorValue;
     private DeliveryArmSubsystem m_deliveryArmSubsystem = RobotContainer.m_deliverySubsystem;
-    private boolean useConstraints;
+    private boolean useConstraints = true;
 
     public DeliveryArmCommand(DoubleSupplier armMotorValue, boolean useConstraints) {
         this.armMotorValue = armMotorValue;

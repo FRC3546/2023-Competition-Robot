@@ -173,8 +173,8 @@ private SwerveModulePosition[] getPositions() {
     }
 
     public Rotation2d getRotation() {
-        //return odometry.getPoseMeters().getRotation();
-        return Rotation2d.fromDegrees(gyroscope.getYaw());
+        return odometry.getPoseMeters().getRotation();
+        //return Rotation2d.fromDegrees(gyroscope.getYaw());
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -281,7 +281,7 @@ private SwerveModulePosition[] getPositions() {
     @Override
     public void periodic() {
         odometry.update(
-                Rotation2d.fromDegrees(gyroscope.getFusedHeading()),//might be negative
+                Rotation2d.fromDegrees(-gyroscope.getFusedHeading()),//might be negative
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
