@@ -21,9 +21,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class DeliveryArmCommand extends CommandBase{
     private final DoubleSupplier armMotorValue;
     private DeliveryArmSubsystem m_deliveryArmSubsystem = RobotContainer.m_deliverySubsystem;
+    private boolean useConstraints;
 
-    public DeliveryArmCommand(DoubleSupplier armMotorValue) {
+    public DeliveryArmCommand(DoubleSupplier armMotorValue, boolean useConstraints) {
         this.armMotorValue = armMotorValue;
+        this.useConstraints = useConstraints;
         addRequirements(m_deliveryArmSubsystem);
     }
 
@@ -51,6 +53,11 @@ public class DeliveryArmCommand extends CommandBase{
             m_deliveryArmSubsystem.Release();
             m_deliveryArmSubsystem.SetDeliveryArmSpeed(-armMotorValue.getAsDouble());
             // System.out.println("Too short coming back");
+        }
+        else if (!useConstraints){
+            m_deliveryArmSubsystem.Release();
+            m_deliveryArmSubsystem.SetDeliveryArmSpeed(-armMotorValue.getAsDouble());
+
         }
 
         else{

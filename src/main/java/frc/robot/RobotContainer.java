@@ -94,7 +94,7 @@ public class RobotContainer {
             () -> -modifyAxis(-m_driverController.getRawAxis(2)) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_armController.getRawAxis(1)));
+    m_deliverySubsystem.setDefaultCommand(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), true));
 
     m_flipperSubsystem.setDefaultCommand(new FlipperArmCommand(() -> m_flipperController.getRawAxis(1)));
 
@@ -159,7 +159,11 @@ public class RobotContainer {
     
     new JoystickButton(m_armController, 4)
       .onTrue(new ExtendDeliveryArmCommand(20000.0));
-
+    
+    new JoystickButton(m_armController, 5)
+      .onTrue(new DeliveryArmCommand(() -> m_armController.getRawAxis(0), false))
+      .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(0), true))
+      .onFalse(new InstantCommand(() -> m_deliverySubsystem.ZeroEncoder()));
 
   }
 
