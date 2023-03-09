@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commandgroups.DeliveryArmTransfer;
+import edu.wpi.first.wpilibj.XboxController.Button;
+
 // command groups
 import frc.robot.commandgroups.LowerOpenFlipperCommand;
 import frc.robot.commandgroups.ResetGyroResetEncoders;
@@ -41,6 +43,7 @@ import frc.robot.commands.MoveFlipperCommand;
 import frc.robot.commands.JoystickExtendDeliveryArmCommand;
 import frc.robot.commands.JoystickMoveFlipperCommand;
 import frc.robot.commands.FlipperArmCommand;
+import frc.robot.commands.LockWheelsCommand;
 
 // subsystems
 import frc.robot.subsystems.DeliveryArmSubsystem;
@@ -110,9 +113,15 @@ public class RobotContainer {
  
   private void configureBindings() {
 
+
+    new JoystickButton(m_driverController, 1)
+      .whileTrue(new LockWheelsCommand(m_drivetrainSubsystem));
+
+
     // driver drivetrain buttons
     new JoystickButton(m_flipperController, 11)
       .onTrue(new InstantCommand(() -> m_drivetrainSubsystem.zeroGyroscope()));
+
 
 
 
@@ -164,6 +173,7 @@ public class RobotContainer {
       .onTrue(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), false))
       .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), true))
       .onFalse(new InstantCommand(() -> m_deliverySubsystem.ZeroEncoder()));
+
 
   }
 
