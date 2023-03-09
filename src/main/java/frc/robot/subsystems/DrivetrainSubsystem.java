@@ -48,10 +48,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(Constants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, Constants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-    private final SwerveModule frontLeftModule;
-    private final SwerveModule frontRightModule;
-    private final SwerveModule backLeftModule;
-    private final SwerveModule backRightModule;
+    public final SwerveModule frontLeftModule;
+    public final SwerveModule frontRightModule;
+    public final SwerveModule backLeftModule;
+    public final SwerveModule backRightModule;
 
         //Drive motors variables that cast to in the declarator of the modules
     public final CANSparkMax frontLeftDriveMotor;
@@ -216,6 +216,10 @@ private SwerveModulePosition[] getPositions() {
 
     public void setGyroOffset(double offset){
         this.offset = offset;
+    }
+
+    public double getPitch(){
+        return gyroscope.getPitch();
     }
 
     public double getGyroFusedOffset(){
