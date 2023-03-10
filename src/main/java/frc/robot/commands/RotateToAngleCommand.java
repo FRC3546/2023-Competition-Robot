@@ -2,9 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -55,11 +57,14 @@ public class RotateToAngleCommand extends CommandBase {
     DoubleSupplier speed = () ->
         MathUtil.clamp(
             err * kP,
-            -DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * 0.5,
-            DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * 0.5);
+            -DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * .5,
+            DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * .5);
 
     if (Math.abs(err) > 2 && timer.get() < timeout) {
-      new DriveCommand(drivetrain, zero, zero, () -> .3);
+      drivetrain.drive(
+        ChassisSpeeds.fromFieldRelativeSpeeds(0.0,0.0,Math.PI/2,drivetrain.getRotation()
+        )
+);
         System.out.println("Driving");
     } else {
         System.out.println("complete");
