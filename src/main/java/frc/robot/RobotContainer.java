@@ -201,10 +201,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-      
+
 
     
-    // return Autos.moveAuto();
+    return Autos.moveAuto();
     //return generateAutoWithPathPlanner();
   }
 

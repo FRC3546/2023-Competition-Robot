@@ -26,6 +26,7 @@ public class BalanceCommand extends CommandBase {
   public void initialize() {
     System.out.println("Initialized");
     balanced = false;
+    new DriveCommand(drivetrain, forward, zero, zero);
   }
 
   @Override
@@ -33,18 +34,18 @@ public class BalanceCommand extends CommandBase {
    
     System.out.println("executing");
     System.out.println(balanced);
-    double pitch = drivetrain.getPitch();
+    
 
-    if(pitch >= 2){
-        new DriveCommand(drivetrain, forward, zero, zero);
+    if(drivetrain.gyroscope.getPitch() >= 2){
+        forward = () -> -.4;
     }
 
-    if(pitch <= -2){
-        new DriveCommand(drivetrain, backwards, zero, zero);
+    if(drivetrain.gyroscope.getPitch() <= -2){
+        forward = () -> .4;
     }
 
     else{
-        new DriveCommand(drivetrain, zero, zero, zero);
+        forward = () -> 0;
         balanced = true;
     }
 
@@ -57,6 +58,6 @@ public class BalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return balanced;
+    return false;
   }
 }
