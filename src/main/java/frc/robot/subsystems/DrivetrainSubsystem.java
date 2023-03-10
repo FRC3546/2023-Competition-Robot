@@ -132,7 +132,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
                 odometry = new SwerveDriveOdometry(
                         kinematics,
-                        Rotation2d.fromDegrees(gyroscope.getFusedHeading()),
+                        Rotation2d.fromDegrees(gyroscope.getYaw()),
                         new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
                 );
 
@@ -226,8 +226,8 @@ private SwerveModulePosition[] getPositions() {
         return gyroscope.getFusedHeading() + offset;
     }
 
-    public double getGyroYawOffset(){
-        return gyroscope.getYaw() + offset;
+    public double getGyroYaw(){
+        return gyroscope.getYaw();
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -285,7 +285,7 @@ private SwerveModulePosition[] getPositions() {
     @Override
     public void periodic() {
         odometry.update(
-                Rotation2d.fromDegrees(-gyroscope.getFusedHeading()),//might be negative
+                Rotation2d.fromDegrees(-gyroscope.getYaw()),//might be negative
                 new SwerveModulePosition[]{ frontLeftModule.getPosition(), frontRightModule.getPosition(), backLeftModule.getPosition(), backRightModule.getPosition() }
         );
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
