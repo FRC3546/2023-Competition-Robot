@@ -48,6 +48,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(Constants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, Constants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
+    public static final double MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND = Math.toDegrees(MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    
     public final SwerveModule frontLeftModule;
     public final SwerveModule frontRightModule;
     public final SwerveModule backLeftModule;
@@ -69,7 +71,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private SwerveModuleState[] states;
 
 
-    public static final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
+    public final AHRS gyroscope = new AHRS(SerialPort.Port.kUSB);
     
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

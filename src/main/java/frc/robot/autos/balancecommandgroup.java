@@ -26,11 +26,13 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import java.util.function.DoubleSupplier;
 
+import frc.robot.RobotContainer;
 
 
-public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGroup{
 
-    DoubleSupplier moveForward = () -> 0.2;
+public class balancecommandgroup extends SequentialCommandGroup{
+
+    // DoubleSupplier moveForward = () -> 0.2;
 
     DoubleSupplier x = () -> 0;
     DoubleSupplier y = () -> -0.2;
@@ -38,33 +40,13 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
 
 
-    public DeployGamepieceAndLeaveAndBalanceAuto(double deployPosition, double endPosition){
+    public balancecommandgroup(){
         
             addCommands(
-                new DeliveryArmTransfer(),
-                new PauseCommand(0.9),
-                new ExtendDeliveryArmCommand(deployPosition),
                 
-                new ParallelDeadlineGroup(
-                    new PauseCommand(1),
-                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
-                ),
-
-                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
-                new PauseCommand(0.5),
-                new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),
-                new ExtendDeliveryArmCommand(endPosition),
-                
-                new ParallelDeadlineGroup(
-                    new PauseCommand(2.5), 
-                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
-
-                new RotateToAngleCommand(180, 4),
                 new BalanceCommand(),
-                new LockWheelsCommand()
-                
-                
-                );
+                new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)
+            );
 
                 
 

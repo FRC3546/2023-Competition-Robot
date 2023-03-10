@@ -8,8 +8,8 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class BalanceCommand extends CommandBase {
 
-    DoubleSupplier forward = () -> 0.15;
-    DoubleSupplier backwards = () -> -0.15;
+    DoubleSupplier forward = () -> -0.4;
+    DoubleSupplier backwards = () -> 0.4;
 
     DoubleSupplier zero = () -> 0;
 
@@ -24,12 +24,15 @@ public class BalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    System.out.println("Initialized");
     balanced = false;
   }
 
   @Override
   public void execute() {
    
+    System.out.println("executing");
+    System.out.println(balanced);
     double pitch = drivetrain.getPitch();
 
     if(pitch >= 2){

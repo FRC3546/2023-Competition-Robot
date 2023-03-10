@@ -115,7 +115,7 @@ public class RobotContainer {
 
 
     new JoystickButton(m_driverController, 1)
-      .whileTrue(new LockWheelsCommand(m_drivetrainSubsystem));
+      .whileTrue(new LockWheelsCommand());
 
 
     // driver drivetrain buttons

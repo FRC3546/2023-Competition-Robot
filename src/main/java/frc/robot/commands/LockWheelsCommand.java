@@ -4,22 +4,20 @@
 
 package frc.robot.commands;
 
-import com.swervedrivespecialties.swervelib.SwerveModule;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
 
 public class LockWheelsCommand extends CommandBase {
-  DrivetrainSubsystem m_drive;
+  DrivetrainSubsystem m_drive = RobotContainer.m_drivetrainSubsystem;
   private final Timer timer = new Timer();
 
   /** Creates a new sturdyBaseCommand. */
-  public LockWheelsCommand(DrivetrainSubsystem drive) {
-    m_drive = drive; 
-       // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drive);
+  public LockWheelsCommand() {
+
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
