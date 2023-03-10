@@ -66,6 +66,13 @@ public class RobotContainer {
   List<PathPlannerTrajectory> selectedAuto;
   SendableChooser<String> AllianceChooser = new SendableChooser<>();
 
+
+  private static final String ScoreAndLeave = "scoreandleave";
+  private static final String ScoreLeaveAndBalance = "scoreleaveandbalance";
+  private static final String leaveImmediately = "leaveImmediately";
+  private static final String scoreAndGrab = "scoreAndGrab";
+  SendableChooser<String> NonPathPlannerAutos = new SendableChooser<>();
+
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
   // subsystem declarations
@@ -103,6 +110,12 @@ public class RobotContainer {
 
 
     configureBindings();
+
+    NonPathPlannerAutos.addOption("Score and Leave", ScoreAndLeave);
+    NonPathPlannerAutos.addOption("Score Leave and Balance", ScoreLeaveAndBalance);
+    NonPathPlannerAutos.addOption("Leave Immediately", leaveImmediately);
+    NonPathPlannerAutos.addOption("Score and Grab", scoreAndGrab);
+    SmartDashboard.putData("nonPath Planner Autos", NonPathPlannerAutos);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -188,8 +201,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+      
+
     
-    return Autos.moveAuto();
+    // return Autos.moveAuto();
     //return generateAutoWithPathPlanner();
   }
 
