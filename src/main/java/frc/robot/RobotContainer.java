@@ -203,7 +203,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
       
 
-    
+    return Autos.moveAuto();
     // return Autos.moveAuto();
     //return generateAutoWithPathPlanner();
   }
