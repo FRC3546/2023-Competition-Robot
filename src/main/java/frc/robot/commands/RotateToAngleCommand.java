@@ -33,17 +33,17 @@ public class RotateToAngleCommand extends CommandBase {
     timer.reset();
     timer.start();
     complete = false;
-    System.out.println("rotate initialized");
+    // System.out.println("rotate initialized");
   }
 
   @Override
   public void execute() {
 
-    System.out.println("rotate executing");
+    // System.out.println("rotate executing");
 
     double gyroAngle = drivetrain.gyroscope.getYaw();
 
-    final double kP = 0.2;
+    final double kP = 1.5;
 
     if (angle > 180) {
       angle = -(360 - angle);
@@ -60,14 +60,14 @@ public class RotateToAngleCommand extends CommandBase {
             -DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * .5,
             DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND * .5);
 
-    if (Math.abs(err) > 2 && timer.get() < timeout) {
+    if (Math.abs(err) > 1 && timer.get() < timeout) {
       drivetrain.drive(
-        ChassisSpeeds.fromFieldRelativeSpeeds(0.0,0.0,Math.PI/2,drivetrain.getRotation()
+        ChassisSpeeds.fromFieldRelativeSpeeds(0.0,0.0,Math.toRadians(speed.getAsDouble()) + .35,drivetrain.getRotation()
         )
 );
-        System.out.println("Driving");
+        // System.out.println("Driving");
     } else {
-        System.out.println("complete");
+        // System.out.println("complete");
       complete = true;
     }
   }
