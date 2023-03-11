@@ -21,7 +21,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 public class DeployGamepieceAuto extends SequentialCommandGroup{
 
-    PathPlannerTrajectory testDrive = PathPlanner.loadPath("hi", new PathConstraints(DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 2));
 
     public DeployGamepieceAuto(double deployPosition, double endPosition){
         

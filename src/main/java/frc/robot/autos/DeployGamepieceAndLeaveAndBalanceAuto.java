@@ -40,7 +40,7 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
 
     DoubleSupplier x = () -> 0;
-    DoubleSupplier y = () -> 0.35;
+    DoubleSupplier y = () -> 0.3;
     DoubleSupplier rot = () -> 0;
 
 
