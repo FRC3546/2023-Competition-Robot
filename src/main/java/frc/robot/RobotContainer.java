@@ -18,6 +18,9 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
+import frc.robot.autos.DeployGamepieceAndLeaveAuto;
+import frc.robot.autos.DeployGamepieceAuto;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.subsystems.DeliveryArmSubsystem;
@@ -71,7 +74,8 @@ public class RobotContainer {
   private static final String ScoreLeaveAndBalance = "scoreleaveandbalance";
   private static final String leaveImmediately = "leaveImmediately";
   private static final String scoreAndGrab = "scoreAndGrab";
-  SendableChooser<String> NonPathPlannerAutos = new SendableChooser<>();
+  
+  SendableChooser<Command> autos = new SendableChooser<>();
 
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
@@ -111,13 +115,19 @@ public class RobotContainer {
 
     configureBindings();
 
-    NonPathPlannerAutos.addOption("Score and Leave", ScoreAndLeave);
-    NonPathPlannerAutos.addOption("Score Leave and Balance", ScoreLeaveAndBalance);
-    NonPathPlannerAutos.addOption("Leave Immediately", leaveImmediately);
-    NonPathPlannerAutos.addOption("Score and Grab", scoreAndGrab);
-    SmartDashboard.putData("nonPath Planner Autos", NonPathPlannerAutos);
+    autos.addOption("Score Cube", new DeployGamepieceAuto(Constants.cubeHigh, 100));
+    autos.addOption("Score Cone", new DeployGamepieceAuto(Constants.coneHigh, 100));
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(Constants.cubeHigh, 100));
+    autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100));
+
+    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.cubeHigh, 100));
+    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100));
+
+
+    SmartDashboard.putData("Autonomous", autos);
+
+    //SmartDashboard.putData("Auto Chooser", autoChooser);
 
     createAutoBuilder();
     generatePathPlannerGroups();
@@ -145,20 +155,20 @@ public class RobotContainer {
     new JoystickButton(m_flipperController, 4)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
-    // delivery arm clamp
-    new JoystickButton(m_flipperController, 5)
-      .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
+    // // delivery arm clamp
+    // new JoystickButton(m_flipperController, 5)
+    //   .onTrue(new InstantCommand(() -> m_deliverySubsystem.OpenDeliveryArmClamp()));
     
-    new JoystickButton(m_flipperController, 3)
-      .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
+    // new JoystickButton(m_flipperController, 3)
+    //   .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
 
 
     
-    new JoystickButton(m_flipperController, 9)
-      .onTrue(new MoveFlipperCommand(Constants.flipperArmDown));
+    // new JoystickButton(m_flipperController, 9)
+    //   .onTrue(new MoveFlipperCommand(Constants.flipperArmDown));
 
-    new JoystickButton(m_flipperController, 10)
-      .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
+    // new JoystickButton(m_flipperController, 10)
+    //   .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
 
     new JoystickButton(m_flipperController, 1)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))
@@ -179,15 +189,15 @@ public class RobotContainer {
     new JoystickButton(m_armController, 3)
       .onTrue(new InstantCommand(() -> m_deliverySubsystem.CloseDeliveryArmClamp()));
     
-    new JoystickButton(m_armController, 4)
-      .onTrue(new ExtendDeliveryArmCommand(20000.0));
+    // new JoystickButton(m_armController, 4)
+    //   .onTrue(new ExtendDeliveryArmCommand(20000.0));
     
     new JoystickButton(m_armController, 10)
       .onTrue(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), false))
       .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), true))
       .onFalse(new InstantCommand(() -> m_deliverySubsystem.ZeroEncoder()));
 
-    new JoystickButton(m_flipperController, 10)
+    new JoystickButton(m_flipperController, 5)
       .onTrue(new MoveFlipperCommand(0.493));
 
 
@@ -206,8 +216,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
 
-    
-    return Autos.moveAuto();
+    return autos.getSelected();
+    //return Autos.moveAuto();
     //return generateAutoWithPathPlanner();
   }
 
