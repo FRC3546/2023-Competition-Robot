@@ -63,15 +63,15 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
                 new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),
                 new ExtendDeliveryArmCommand(endPosition),
 
-                new ParallelDeadlineGroup(
-                    new PauseCommand(0.5),
-                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveBackward, x, rot)
-                ),
+                // new ParallelDeadlineGroup(
+                //     new PauseCommand(0.5),
+                //     new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveBackward, x, rot)
+                // ),
 
                 
                 // new ParallelDeadlineGroup(new RotateToAngleCommand(180, 6),
 
-                new MoveFlipperCommand(0.493),
+                // new MoveFlipperCommand(0.493),
 
                 new ParallelDeadlineGroup(new PauseCommand(1.5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
 
