@@ -10,6 +10,7 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -38,7 +39,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 // command groups
 import frc.robot.commandgroups.LowerOpenFlipperCommand;
 import frc.robot.commandgroups.ResetGyroResetEncoders;
-
+import frc.robot.commandgroups.ReturnToHomeCommandgroup;
 // commands
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExtendDeliveryArmCommand;
@@ -142,18 +143,28 @@ public class RobotContainer {
 
 
     // driver drivetrain buttons
-    new JoystickButton(m_flipperController, 11)
-      .onTrue(new InstantCommand(() -> m_drivetrainSubsystem.zeroGyroscope()));
+    
 
+      new JoystickButton(m_flipperController, 1)
+      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))
+      .onFalse(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
 
+    new JoystickButton(m_flipperController, 2)
+      .onTrue(new DeliveryArmTransfer());
 
 
     // flipper arm clamp
-    new JoystickButton(m_flipperController, 6)
-      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
 
     new JoystickButton(m_flipperController, 4)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
+
+    new JoystickButton(m_flipperController, 6)
+      .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
+
+    
+
+      new JoystickButton(m_flipperController, 11)
+      .onTrue(new InstantCommand(() -> m_drivetrainSubsystem.zeroGyroscope()));
 
     // // delivery arm clamp
     // new JoystickButton(m_flipperController, 5)
@@ -200,8 +211,14 @@ public class RobotContainer {
     new JoystickButton(m_flipperController, 5)
       .onTrue(new MoveFlipperCommand(0.493));
 
+    new JoystickButton(m_flipperController, 3)
+      .onTrue(new MoveFlipperCommand(Constants.flipperHybrid));
 
-  }
+    new JoystickButton(m_flipperController, 7)
+      .onTrue(new ReturnToHomeCommandgroup());
+    
+    }
+  
 
   private Command generateAutoWithPathPlanner() {
     return autoBuilder.fullAuto(autoChooser.getSelected());

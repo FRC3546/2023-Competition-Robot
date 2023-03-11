@@ -18,19 +18,36 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import java.util.function.DoubleSupplier;
+import frc.robot.commands.DriveCommand;
+
 
 public class DeployGamepieceAuto extends SequentialCommandGroup{
 
 
+    DoubleSupplier moveForward = () -> -0.1;
+    DoubleSupplier moveBackward = () -> 0.1;
+
+    DoubleSupplier x = () -> 0;
+    DoubleSupplier y = () -> 0;
+    DoubleSupplier rot = () -> 0;
+
     public DeployGamepieceAuto(double deployPosition, double endPosition){
         
-            addCommands(
+
+                addCommands(
                 new DeliveryArmTransfer(),
-                new PauseCommand(0.5),
+                new PauseCommand(0.9),
                 new ExtendDeliveryArmCommand(deployPosition),
+                
+                new ParallelDeadlineGroup(
+                    new PauseCommand(1),
+                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
+                ),
+
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
                 new PauseCommand(0.5),
-                new InstantCommand(() -> RobotContainer.m_deliverySubsystem.CloseDeliveryArmClamp()),
+                new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),
                 new ExtendDeliveryArmCommand(endPosition)
                 
                 );

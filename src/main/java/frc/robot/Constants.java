@@ -97,4 +97,6 @@ public final class Constants {
 
   public static final double flipperArmUp = .325;
   public static final double flipperArmDown = 0.56;
+  public static final double flipperHybrid = 0.4425;
+  //public static final double flipperChargingStation
 }
