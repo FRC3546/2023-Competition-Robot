@@ -27,10 +27,11 @@ import java.util.function.DoubleSupplier;
 
 public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
 
-    DoubleSupplier moveForward = () -> 0.2;
+    DoubleSupplier moveForward = () -> -0.1;
+    DoubleSupplier moveBackward = () -> 0.1;
 
     DoubleSupplier x = () -> 0;
-    DoubleSupplier y = () -> -0.5;
+    DoubleSupplier y = () -> 0.3;
     DoubleSupplier rot = () -> 0;
 
     public DeployGamepieceAndLeaveAuto(double deployPosition, double endPosition){

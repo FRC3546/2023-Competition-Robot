@@ -49,11 +49,8 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Flipper Encoder Value", RobotContainer.m_flipperSubsystem.GetFlipperPosition());
     SmartDashboard.putBoolean("Manual Arm Active", OperatorConstants.kArmIsManual);
-    SmartDashboard.putBoolean("Manual Flipper Activated", OperatorConstants.kFlipperIsManual);
-    SmartDashboard.putNumber("Joystick Y alue", RobotContainer.m_flipperController.getY());
     SmartDashboard.putNumber("flipper motor speed", RobotContainer.m_flipperSubsystem.GetFlipperMotorSpeed());
     SmartDashboard.putNumber("Encoder Value", RobotContainer.m_deliverySubsystem.GetDeliveryArmPosition());
-    SmartDashboard.putNumber("Pitch Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getPitch());
     SmartDashboard.putNumber("Roll Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getRoll());
     SmartDashboard.putNumber("RawYaw", RobotContainer.m_drivetrainSubsystem.gyroscope.getYaw());
     
