@@ -42,7 +42,7 @@ public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
                 new ExtendDeliveryArmCommand(deployPosition),
                 
                 new ParallelDeadlineGroup(
-                    new PauseCommand(1),
+                    new PauseCommand(.5),
                     new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
                 ),
 
@@ -52,7 +52,7 @@ public class DeployGamepieceAndLeaveAuto extends SequentialCommandGroup{
                 new ExtendDeliveryArmCommand(endPosition),
                 
                 new ParallelDeadlineGroup(
-                    new PauseCommand(2.5), 
+                    new PauseCommand(3.5), 
                     new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot))
                 
             );
