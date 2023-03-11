@@ -23,13 +23,13 @@ public final class Autos {
   }
 
   public static CommandBase moveAuto(){
-    // return new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100);
+    return new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100);
     //return new RotateToAngleCommand(180, 15);
     //return new RotateToAngleCommand(179, 15);
     // return new balancecommandgroup();
     //return new ParallelDeadlineGroup(new PauseCommand(1), new DriveCommand(null, () -> -0.1, null, null));
     //return new BalanceAndLockCommandgroup();
-    return new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100);
+    // return new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100);
   }
 
   private Autos() {
