@@ -73,8 +73,10 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
                 new MoveFlipperCommand(0.493),
 
-                new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot))
+                new ParallelDeadlineGroup(new PauseCommand(1.5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
 
+                new BalanceCommand(),
+                new LockWheelsCommand()
                 // new ParallelDeadlineGroup(
                 //     new PauseCommand(2.5), 
                 //     new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot))
