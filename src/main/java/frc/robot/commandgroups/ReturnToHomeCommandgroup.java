@@ -24,8 +24,10 @@ public class ReturnToHomeCommandgroup extends SequentialCommandGroup{
     public ReturnToHomeCommandgroup(){
         
             addCommands(
-                new InstantCommand(() -> RobotContainer.m_flipperSubsystem.OpenFlipperClamp()),
+                new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
+
+                new PauseCommand(0.2),
                 
                 new ParallelDeadlineGroup(new ExtendDeliveryArmCommand(0), 
                 new MoveFlipperCommand(Constants.flipperArmUp))

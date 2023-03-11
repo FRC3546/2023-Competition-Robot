@@ -214,8 +214,8 @@ public class RobotContainer {
     new JoystickButton(m_flipperController, 3)
       .onTrue(new MoveFlipperCommand(Constants.flipperHybrid));
 
-    new JoystickButton(m_flipperController, 7)
-      .onTrue(new ReturnToHomeCommandgroup());
+    // new JoystickButton(m_armController, 11)
+    //   .onTrue(new ReturnToHomeCommandgroup());
     
     }
   
