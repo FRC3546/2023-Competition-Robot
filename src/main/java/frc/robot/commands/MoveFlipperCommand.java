@@ -35,11 +35,11 @@ public class MoveFlipperCommand extends CommandBase {
     
     if (m_flipperSubsystem.GetFlipperPosition() < position){
         lowering = true;
-        m_flipperSubsystem.SetFlipperSpeed(-0.3);
+        m_flipperSubsystem.SetFlipperSpeed(-1);
     }
     else if (m_flipperSubsystem.GetFlipperPosition() > position){
       lowering = false;
-      m_flipperSubsystem.SetFlipperSpeed(0.3);
+      m_flipperSubsystem.SetFlipperSpeed(1);
     }
 
     else{

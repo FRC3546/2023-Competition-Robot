@@ -187,6 +187,9 @@ public class RobotContainer {
       .onFalse(new DeliveryArmCommand(() -> m_armController.getRawAxis(1), true))
       .onFalse(new InstantCommand(() -> m_deliverySubsystem.ZeroEncoder()));
 
+    new JoystickButton(m_flipperController, 10)
+      .onTrue(new MoveFlipperCommand(0.493));
+
 
   }
 

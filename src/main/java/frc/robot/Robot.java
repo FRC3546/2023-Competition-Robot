@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OperatorConstants;
 
 import frc.robot.subsystems.DeliveryArmSubsystem;
-
+import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    RobotContainer.m_drivetrainSubsystem.gyroscope.zeroYaw();
     m_robotContainer = new RobotContainer();
   }
 
@@ -52,8 +53,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Joystick Y alue", RobotContainer.m_flipperController.getY());
     SmartDashboard.putNumber("flipper motor speed", RobotContainer.m_flipperSubsystem.GetFlipperMotorSpeed());
     SmartDashboard.putNumber("Encoder Value", RobotContainer.m_deliverySubsystem.GetDeliveryArmPosition());
-    SmartDashboard.putNumber("Pitch Value", RobotContainer.m_drivetrainSubsystem.getPitch());
-    SmartDashboard.putNumber("RawYaw", RobotContainer.m_drivetrainSubsystem.getGyroYaw());
+    SmartDashboard.putNumber("Pitch Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getPitch());
+    SmartDashboard.putNumber("Roll Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getRoll());
+    SmartDashboard.putNumber("RawYaw", RobotContainer.m_drivetrainSubsystem.gyroscope.getYaw());
     
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,

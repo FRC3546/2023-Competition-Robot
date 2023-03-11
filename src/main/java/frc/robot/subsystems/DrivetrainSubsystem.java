@@ -221,7 +221,7 @@ private SwerveModulePosition[] getPositions() {
     }
 
     public double getPitch(){
-        return gyroscope.getPitch();
+        return gyroscope.getRoll();
     }
 
     public double getGyroFusedOffset(){
@@ -237,6 +237,10 @@ private SwerveModulePosition[] getPositions() {
                 getPositions(),
                 pose);
     }
+
+    public double getPitchRate() {
+        return gyroscope.getRawGyroY();
+      }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();

@@ -43,7 +43,7 @@ public class RotateToAngleCommand extends CommandBase {
 
     double gyroAngle = drivetrain.gyroscope.getYaw();
 
-    final double kP = 1.5;
+    final double kP = 0.6;
 
     if (angle > 180) {
       angle = -(360 - angle);
