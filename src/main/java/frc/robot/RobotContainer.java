@@ -39,7 +39,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 // command groups
 import frc.robot.commandgroups.LowerOpenFlipperCommand;
 import frc.robot.commandgroups.ResetGyroResetEncoders;
-import frc.robot.commandgroups.ReturnToHomeCommandgroup;
+// import frc.robot.commandgroups.ReturnToHomeCommandgroup;
 // commands
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExtendDeliveryArmCommand;
@@ -214,8 +214,8 @@ public class RobotContainer {
     new JoystickButton(m_flipperController, 3)
       .onTrue(new MoveFlipperCommand(Constants.flipperHybrid));
 
-    new JoystickButton(m_flipperController, 7)
-      .onTrue(new ReturnToHomeCommandgroup());
+    // new JoystickButton(m_flipperController, 7)
+    //   .onTrue(new ReturnToHomeCommandgroup());
     
     }
   

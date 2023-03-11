@@ -69,9 +69,9 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
                 ),
 
                 
-                new ParallelDeadlineGroup(new RotateToAngleCommand(180, 6),
+                // new ParallelDeadlineGroup(new RotateToAngleCommand(180, 6),
 
-                new MoveFlipperCommand(0.493)),
+                new MoveFlipperCommand(0.493),
 
                 new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot))
 
