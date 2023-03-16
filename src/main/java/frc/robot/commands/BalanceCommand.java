@@ -11,11 +11,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class BalanceCommand extends CommandBase {
 
-    public double forwardFast = -0.5;
-    public double backwardsFast = 0.5;
+    public double forwardFast = -0.3;
+    public double backwardsFast = 0.3;
 
-    public double forwardSlow = -0.05;
-    public double backwardsSlow = 0.05;
+    public double forwardSlow = -0.15;
+    public double backwardsSlow = 0.15;
 
     public double zero = 0.0;
 
@@ -109,7 +109,7 @@ public class BalanceCommand extends CommandBase {
       
     // }
 
-    if((drivetrain.gyroscope.getRoll() >= 9) && (drivetrain.gyroscope.getRoll() <= -9)){
+    if((drivetrain.gyroscope.getRoll() >= 5) || (drivetrain.gyroscope.getRoll() <= -5)){
 
       System.out.println("Fast speeds");
 

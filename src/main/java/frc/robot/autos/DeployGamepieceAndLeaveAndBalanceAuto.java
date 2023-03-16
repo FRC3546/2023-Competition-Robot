@@ -40,7 +40,7 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
 
     DoubleSupplier x = () -> 0;
-    DoubleSupplier y = () -> 0.3;
+    DoubleSupplier y = () -> 0.4;
     DoubleSupplier rot = () -> 0;
 
 
@@ -73,7 +73,7 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
                 // new MoveFlipperCommand(0.493),
 
-                new ParallelDeadlineGroup(new PauseCommand(1.5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
+                new ParallelDeadlineGroup(new PauseCommand(1.75), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
 
                 new BalanceCommand(),
                 new LockWheelsCommand()
