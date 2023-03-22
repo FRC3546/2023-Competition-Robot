@@ -11,11 +11,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class BalanceCommand extends CommandBase {
 
-    public double forwardFast = -0.3;
-    public double backwardsFast = 0.3;
+    // public double forwardFast = -0.3;
+    // public double backwardsFast = 0.3;
 
-    public double forwardSlow = -0.15;
-    public double backwardsSlow = 0.15;
+    public double forwardSlow = -0.1;
+    public double backwardSlow = 0.1;
 
     public double zero = 0.0;
 
@@ -109,62 +109,80 @@ public class BalanceCommand extends CommandBase {
       
     // }
 
-    if((drivetrain.gyroscope.getRoll() >= 5) || (drivetrain.gyroscope.getRoll() <= -5)){
+    // if((drivetrain.gyroscope.getRoll() >= 5) || (drivetrain.gyroscope.getRoll() <= -5)){
 
-      System.out.println("Fast speeds");
+    //   System.out.println("Fast speeds");
 
-      if(drivetrain.gyroscope.getRoll() < 0){
+    //   if(drivetrain.gyroscope.getRoll() < 0){
 
-        drivetrain.drive(
-          ChassisSpeeds.fromFieldRelativeSpeeds(forwardFast, zero, zero, drivetrain.getRotation())
-        );
+    //     drivetrain.drive(
+    //       ChassisSpeeds.fromFieldRelativeSpeeds(forwardFast, zero, zero, drivetrain.getRotation())
+    //     );
 
-      }
+    //   }
 
-      else if(drivetrain.gyroscope.getRoll() > 0){
+    //   else if(drivetrain.gyroscope.getRoll() > 0){
         
-        drivetrain.drive(
-          ChassisSpeeds.fromFieldRelativeSpeeds(backwardsFast, zero, zero, drivetrain.getRotation())
-        );
+    //     drivetrain.drive(
+    //       ChassisSpeeds.fromFieldRelativeSpeeds(backwardsFast, zero, zero, drivetrain.getRotation())
+    //     );
 
-      }
+    //   }
 
 
+    // }
+
+    // else{
+
+    //   System.out.println("Slow speeds");
+
+    //   if(drivetrain.gyroscope.getRoll() < -2){
+
+    //     drivetrain.drive(
+    //       ChassisSpeeds.fromFieldRelativeSpeeds(backwardsSlow, zero, zero, drivetrain.getRotation())
+    //     );
+
+    //   }
+
+
+    //   else if(drivetrain.gyroscope.getRoll() > 2){
+
+    //     drivetrain.drive(
+    //       ChassisSpeeds.fromFieldRelativeSpeeds(backwardsSlow, zero, zero, drivetrain.getRotation())
+    //     );
+
+    //   }
+
+    //   else{
+
+    //     drivetrain.drive(
+    //       ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+    //     );
+
+    //     balanced = true;
+
+    //   }
+
+    // }
+    
+
+    if(drivetrain.gyroscope.getRoll() > 2){
+      drivetrain.drive(
+        ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
+      );
+      balanced = false;
+    }
+
+    if(drivetrain.gyroscope.getRoll() < -2){
+      drivetrain.drive(
+        ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+      );
+      balanced = false;
     }
 
     else{
-
-      System.out.println("Slow speeds");
-
-      if(drivetrain.gyroscope.getRoll() < -2){
-
-        drivetrain.drive(
-          ChassisSpeeds.fromFieldRelativeSpeeds(backwardsSlow, zero, zero, drivetrain.getRotation())
-        );
-
-      }
-
-
-      else if(drivetrain.gyroscope.getRoll() > 2){
-
-        drivetrain.drive(
-          ChassisSpeeds.fromFieldRelativeSpeeds(backwardsSlow, zero, zero, drivetrain.getRotation())
-        );
-
-      }
-
-      else{
-
-        drivetrain.drive(
-          ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
-        );
-
-        balanced = true;
-
-      }
-
+      balanced = true;
     }
-
 
 
   }

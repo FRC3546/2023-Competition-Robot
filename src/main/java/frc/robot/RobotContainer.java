@@ -71,10 +71,7 @@ public class RobotContainer {
   SendableChooser<String> AllianceChooser = new SendableChooser<>();
 
 
-  private static final String ScoreAndLeave = "scoreandleave";
-  private static final String ScoreLeaveAndBalance = "scoreleaveandbalance";
-  private static final String leaveImmediately = "leaveImmediately";
-  private static final String scoreAndGrab = "scoreAndGrab";
+
   
   SendableChooser<Command> autos = new SendableChooser<>();
 

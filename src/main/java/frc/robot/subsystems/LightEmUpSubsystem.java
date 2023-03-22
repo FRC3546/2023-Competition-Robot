@@ -8,20 +8,19 @@ import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
-//The LightDrive Library
-import java.awt.Color; //Predefined colors and routines
+import com.ctre.phoenix.CANifier.LEDChannel;
+import com.ctre.phoenix.CANifier;
 
 public class LightEmUpSubsystem extends SubsystemBase{
 
-    public AddressableLED m_led = new AddressableLED(1);
-    public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
+    public CANifier led = new CANifier(0);
+
+
+    
 
     public void LEDSetup(){
 
-        m_led.setLength(m_ledBuffer.getLength());
-
-        m_led.setData(m_ledBuffer);
-        m_led.start();
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA);
     }
 
     public void LEDBlue(){
