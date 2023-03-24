@@ -13,7 +13,7 @@ import com.ctre.phoenix.CANifier;
 
 public class LightEmUpSubsystem extends SubsystemBase{
 
-    public CANifier led = new CANifier(69);
+    public CANifier led = new CANifier(9);
 
 
     
