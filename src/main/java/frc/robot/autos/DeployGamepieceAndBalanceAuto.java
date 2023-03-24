@@ -33,7 +33,7 @@ import frc.robot.commands.FlipperArmCommand;
 
 
 
-public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGroup{
+public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
 
     DoubleSupplier moveForward = () -> -0.1;
     DoubleSupplier moveBackward = () -> 0.1;
@@ -41,15 +41,13 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
 
     DoubleSupplier x = () -> 0;
     DoubleSupplier y = () -> 0.4;
-    DoubleSupplier yy = () -> -.4;
     DoubleSupplier rot = () -> 0;
 
     DoubleSupplier balanceSpeed = () -> 0.1;
-    DoubleSupplier reverseBalanceSpeed = () -> -.1;
 
 
 
-    public DeployGamepieceAndLeaveAndBalanceAuto(double deployPosition, double endPosition){
+    public DeployGamepieceAndBalanceAuto(double deployPosition, double endPosition){
         
             addCommands(
 
@@ -81,14 +79,7 @@ public class DeployGamepieceAndLeaveAndBalanceAuto extends SequentialCommandGrou
                 
 
                 //new ParallelDeadlineGroup(new PauseCommand(1), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
-                new ParallelDeadlineGroup(new PauseCommand(5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
-                new MoveFlipperCommand(.25),
-                new ParallelDeadlineGroup(new PauseCommand(.75), new DriveCommand(RobotContainer.m_drivetrainSubsystem, yy, x, rot)),
-
-
-
-                new ParallelDeadlineGroup(new PauseCommand(.5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, reverseBalanceSpeed, x, rot)),
-
+                new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
 
                 // new BalanceCommand(),
                 new LockWheelsCommand()

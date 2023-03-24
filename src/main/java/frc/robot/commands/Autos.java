@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.Constants;
-import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
+import frc.robot.autos.DeployGamepieceAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAuto;
 import frc.robot.autos.DeployGamepieceAuto;
 // import frc.robot.commandgroups.BalanceAndLockCommandgroup;

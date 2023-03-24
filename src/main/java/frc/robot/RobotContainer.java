@@ -18,6 +18,7 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.autos.DeployGamepieceAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAuto;
 import frc.robot.autos.DeployGamepieceAuto;
@@ -121,8 +122,11 @@ public class RobotContainer {
     autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(Constants.cubeHigh, 100));
     autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100));
 
-    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.cubeHigh, 100));
-    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100));
+    autos.addOption("Score Cube and Balance", new DeployGamepieceAndBalanceAuto(Constants.cubeHigh, 100));
+    autos.addOption("Score Cone and Balance", new DeployGamepieceAndBalanceAuto(Constants.coneHigh, 100));
+
+    autos.addOption("Score Cube and leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.cubeHigh, 100));
+    autos.addOption("Score Cone and leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100));
 
 
     SmartDashboard.putData("Autonomous", autos);
