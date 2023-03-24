@@ -28,7 +28,7 @@ public class LeaveCommunityZoneAuto extends SequentialCommandGroup{
     PathPlannerTrajectory traj2 = PathPlanner.generatePath(
     new PathConstraints(4, 3), 
     new PathPoint(new Translation2d(1.0, 1.0), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0)), // position, heading(direction of travel), holonomic rotation
-    new PathPoint(new Translation2d(3.0, 3.0), Rotation2d.fromDegrees(45), Rotation2d.fromDegrees(-90) // position, heading(direction of travel), holonomic rotation
+    new PathPoint(new Translation2d(3.0, 1.0), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(-90) // position, heading(direction of travel), holonomic rotation
     ));
 
     public LeaveCommunityZoneAuto(){

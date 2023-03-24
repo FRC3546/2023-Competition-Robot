@@ -88,8 +88,9 @@ public final class Constants {
   // 59500
   // 60000
   // 59500
-  public static final double deliveryArmFullyExtended = 59500;
-  public static final double deliveryArmFullyRetracted = 0;
+  // 57000
+  public static final double deliveryArmFullyExtended = 56500;
+  public static final double deliveryArmFullyRetracted = 750;
 
 
   public static final double coneHigh = 56000;

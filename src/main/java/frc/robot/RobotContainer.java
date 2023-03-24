@@ -17,7 +17,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.swervedrivespecialties.swervelib.SwerveModule;
-
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAuto;
@@ -27,6 +26,7 @@ import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FlipperSubsystem;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,6 +52,7 @@ import frc.robot.commands.LockWheelsCommand;
 // subsystems
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.FlipperSubsystem;
+import frc.robot.subsystems.LightEmUpSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -81,6 +82,7 @@ public class RobotContainer {
   public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   public static final FlipperSubsystem m_flipperSubsystem = new FlipperSubsystem();
   public static final DeliveryArmSubsystem m_deliverySubsystem = new DeliveryArmSubsystem();
+  public static final LightEmUpSubsystem m_ledSubsystem = new LightEmUpSubsystem();
 
   // controllers
   public final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);

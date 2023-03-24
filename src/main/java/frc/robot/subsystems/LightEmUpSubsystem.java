@@ -13,25 +13,28 @@ import com.ctre.phoenix.CANifier;
 
 public class LightEmUpSubsystem extends SubsystemBase{
 
-    public CANifier led = new CANifier(0);
+    public CANifier led = new CANifier(69);
 
 
     
 
     public void LEDSetup(){
 
-        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA);
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Green
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelC); // Blue
+        
     }
 
-    public void LEDBlue(){
-        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
-            m_ledBuffer.setRGB(i, 255, 0, 0);
-         }
+    // public void LEDBlue(){
+    //     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+    //         // Sets the specified LED to the RGB values for red
+    //         m_ledBuffer.setRGB(i, 255, 0, 0);
+    //      }
          
-         m_led.setData(m_ledBuffer);
+    //      m_led.setData(m_ledBuffer);
          
-    }
+    // }
     
 
 }
