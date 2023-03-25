@@ -23,6 +23,7 @@ import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAuto;
 import frc.robot.autos.DeployGamepieceAuto;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DaSoundOfDaPolice;
 import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -178,7 +179,21 @@ public class RobotContainer {
     // new JoystickButton(m_flipperController, 7)
     //   .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
 
-    // flipper arm clamp
+    new POVButton(m_flipperController, 180)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDPurple()));
+
+    new POVButton(m_flipperController, 0)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
+
+    new POVButton(m_flipperController, 90)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDRed()));
+
+    new POVButton(m_flipperController, 270)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
+
+    new JoystickButton(m_flipperController, 7)
+      .onTrue(new DaSoundOfDaPolice(1, 0, 0, 0, 0, 1, .5));
+
 
     new JoystickButton(m_flipperController, 4)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.CloseFlipperClamp()));
@@ -186,8 +201,6 @@ public class RobotContainer {
     new JoystickButton(m_flipperController, 6)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()));
 
-    new JoystickButton(m_flipperController, 9)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
 
     
 
@@ -208,18 +221,6 @@ public class RobotContainer {
 
     // new JoystickButton(m_flipperController, 10)
     //   .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
-
-    new POVButton(m_flipperController, 180)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDPurple()));
-
-    new POVButton(m_flipperController, 0)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
-
-    new POVButton(m_flipperController, 90)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDRed()));
-
-    new POVButton(m_flipperController, 270)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
 
 
 
