@@ -55,15 +55,15 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
                 new PauseCommand(0.9),
                 new ExtendDeliveryArmCommand(deployPosition),
                 
-                new ParallelDeadlineGroup(
-                    new PauseCommand(0.5),
-                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
-                ),
+                // new ParallelDeadlineGroup(
+                //     new PauseCommand(0.5),
+                //     new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
+                // ),
 
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
                 new PauseCommand(0.5),
                 new InstantCommand(() -> RobotContainer.m_flipperSubsystem.CloseFlipperClamp()),
-                new ExtendDeliveryArmCommand(endPosition),
+                
 
                 // new ParallelDeadlineGroup(
                 //     new PauseCommand(0.5),
@@ -75,14 +75,17 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
 
                 // new MoveFlipperCommand(0.493),
 
-                new ParallelDeadlineGroup(new PauseCommand(1.5), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot)),
+                
+
+                new ParallelDeadlineGroup(new PauseCommand(1.2), new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot),
+                new ExtendDeliveryArmCommand(endPosition)),
                 
 
                 //new ParallelDeadlineGroup(new PauseCommand(1), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
                 
                 //new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
 
-                new BalanceCommand(),
+                new ParallelDeadlineGroup(new BalanceCommand(), new ExtendDeliveryArmCommand(endPosition)),
                 new LockWheelsCommand()
                 // new ParallelDeadlineGroup(
                 //     new PauseCommand(2.5), 
