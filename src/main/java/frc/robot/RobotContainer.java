@@ -117,7 +117,7 @@ public class RobotContainer {
 
     configureBindings();
 
-    placePosition.addOption("High Cube", Constants.cubeHigh);
+    placePosition.setDefaultOption("High Cube", Constants.cubeHigh);
     placePosition.addOption("High Cone", Constants.coneHigh);
 
     placePosition.addOption("Middle Cube", Constants.cubeMiddle);
@@ -126,17 +126,17 @@ public class RobotContainer {
     placePosition.addOption("Low Cube", Constants.cubeLow);
     placePosition.addOption("Low Cone", Constants.coneLow);
 
-    autos.addOption("Score Cube", new DeployGamepieceAuto(placePosition.getSelected(), 100));
-    autos.addOption("Score Cone", new DeployGamepieceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cube", new DeployGamepieceAuto(placePosition.getSelected().doubleValue(), 100));
+    autos.addOption("Score Cone", new DeployGamepieceAuto(placePosition.getSelected().doubleValue(), 100));
 
-    autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
-    autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected().doubleValue(), 100));
+    autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected().doubleValue(), 100));
 
-    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected(), 100));
-    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cube and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
+    autos.addOption("Score Cone and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
 
-    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
-    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
+    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
 
     SmartDashboard.putData("Deploy Position", placePosition);
     SmartDashboard.putData("Autonomous", autos);

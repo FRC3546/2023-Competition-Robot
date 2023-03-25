@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 
 
 
@@ -14,11 +15,12 @@ public class BalanceCommand extends CommandBase {
     // public double forwardFast = -0.3;
     // public double backwardsFast = 0.3;
 
-    public double forwardSlow = -0.1;
-    public double backwardSlow = 0.1;
+    public double forwardSlow = 0.3;
+    public double backwardSlow = -0.3;
 
     public double zero = 0.0;
 
+    private final Timer time = new Timer();
 
     boolean balanced = false;
 
@@ -31,6 +33,7 @@ public class BalanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    time.start();
     System.out.println("Initialized");
     balanced = false;
   }
@@ -167,21 +170,51 @@ public class BalanceCommand extends CommandBase {
     
 
     if(drivetrain.gyroscope.getRoll() > 2){
+      time.reset();
       drivetrain.drive(
         ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
       );
+      System.out.println("Moving backward into range");
       balanced = false;
     }
 
-    if(drivetrain.gyroscope.getRoll() < -2){
-      drivetrain.drive(
-        ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
-      );
-      balanced = false;
-    }
+    // else if(drivetrain.gyroscope.getRoll() < -6){
+    //   time.reset();
+    //   drivetrain.drive(
+    //     ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+        
+    //   );
+    //   System.out.println("moving forward into range");
+    //   balanced = false;
+    // }
 
     else{
-      balanced = true;
+      time.reset();
+      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 2 && (drivetrain.gyroscope.getRoll() > -6)) || time.getMatchTime() < 1){
+        balanced = true;
+      }
+
+      else{
+        if(drivetrain.gyroscope.getRoll() > 2){
+          time.reset();
+          drivetrain.drive(
+            ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
+          );
+          System.out.println("Moving backward into range");
+          balanced = false;
+        }
+    
+        else if(drivetrain.gyroscope.getRoll() < -6){
+          time.reset();
+          drivetrain.drive(
+            ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+            
+          );
+          System.out.println("moving forward into range");
+          balanced = false;
+        }
+      }
+
     }
 
 
