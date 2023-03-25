@@ -166,17 +166,17 @@ public class RobotContainer {
       .onTrue(new DeliveryArmTransfer());
 
 
-    new JoystickButton(m_flipperController, 10)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDPurple()));
+    // new JoystickButton(m_flipperController, 10)
+    //   .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDPurple()));
 
-    new JoystickButton(m_flipperController, 9)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
+    // new JoystickButton(m_flipperController, 9)
+    //   .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
 
-    new JoystickButton(m_flipperController, 8)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDRed()));
+    // new JoystickButton(m_flipperController, 8)
+    //   .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDRed()));
 
-    new JoystickButton(m_flipperController, 7)
-      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
+    // new JoystickButton(m_flipperController, 7)
+    //   .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
 
     // flipper arm clamp
 
