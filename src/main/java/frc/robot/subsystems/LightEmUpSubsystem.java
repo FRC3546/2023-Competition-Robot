@@ -13,17 +13,41 @@ import com.ctre.phoenix.CANifier;
 
 public class LightEmUpSubsystem extends SubsystemBase{
 
-    public CANifier led = new CANifier(69);
+    public CANifier led = new CANifier(9);
 
 
     
 
-    public void LEDSetup(){
+    // public void LEDSetup(){
 
-        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Green
-        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
-        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelC); // Blue
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Green
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Blue
         
+    // }
+
+    public void LEDPurple(){
+        led.setLEDOutput(90, CANifier.LEDChannel.LEDChannelA); // blue
+        led.setLEDOutput(10, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // green
+    }
+
+    public void LEDYellow(){
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelC); // Green
+    }
+
+    public void LEDRed(){
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Green
+    }
+
+    public void LEDBlue(){
+        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Green
     }
 
     // public void LEDBlue(){
