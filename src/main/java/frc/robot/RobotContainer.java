@@ -18,6 +18,7 @@ import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.autos.DeployGamepieceAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAndBalanceAuto;
 import frc.robot.autos.DeployGamepieceAndLeaveAuto;
 import frc.robot.autos.DeployGamepieceAuto;
