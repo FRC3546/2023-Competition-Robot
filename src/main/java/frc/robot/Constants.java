@@ -101,8 +101,10 @@ public final class Constants {
   public static final double cubeMiddle = 37228;
   public static final double cubeLow = 10000;
 
-
-  public static final double flipperArmUp = .325;
+  //.325
+  //.3
+  //.31
+  public static final double flipperArmUp = .31;
   public static final double flipperArmDown = 0.56;
   public static final double flipperHybrid = 0.4425;
   //public static final double flipperChargingStation

@@ -20,21 +20,38 @@ public class LightEmUpSubsystem extends SubsystemBase{
 
     public void LEDSetup(){
 
-        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Green
-        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
-        led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelC); // Blue
+        // led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
+        // led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+        // led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelC); // Green
         
     }
 
-    // public void LEDBlue(){
-    //     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-    //         // Sets the specified LED to the RGB values for red
-    //         m_ledBuffer.setRGB(i, 255, 0, 0);
-    //      }
+    public void LEDYellow(){
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0.25, CANifier.LEDChannel.LEDChannelC); // Green
          
-    //      m_led.setData(m_ledBuffer);
+    }
+
+    public void LEDPurple(){
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Green
          
-    // }
+    }
+
+    public void LEDBlue(){
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Green
+         
+    }
+
+    public void LEDRed(){
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
+        led.setLEDOutput(1, CANifier.LEDChannel.LEDChannelB); // Red
+        led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Green
+    }
     
 
 }
