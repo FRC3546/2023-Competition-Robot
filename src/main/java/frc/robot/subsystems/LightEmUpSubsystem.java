@@ -18,13 +18,14 @@ public class LightEmUpSubsystem extends SubsystemBase{
 
     
 
-    public void LEDSetup(){
+    // public void LEDSetup(){
 
-        // led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
-        // led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
-        // led.setLEDOutput(100, CANifier.LEDChannel.LEDChannelC); // Green
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Green
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelB); // Red
+    //     led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelC); // Blue
         
-    }
+    // }
+
 
     public void LEDYellow(){
         led.setLEDOutput(0, CANifier.LEDChannel.LEDChannelA); // Blue
