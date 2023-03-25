@@ -132,6 +132,9 @@ public class RobotContainer {
     autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
     autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
 
+    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndBalanceAuto(placePosition.getSelected(), 100));
+
     autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
     autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
 

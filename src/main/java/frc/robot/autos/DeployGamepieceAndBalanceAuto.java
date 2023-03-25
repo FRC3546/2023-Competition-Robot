@@ -79,9 +79,10 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
                 
 
                 //new ParallelDeadlineGroup(new PauseCommand(1), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
-                new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
+                
+                //new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
 
-                // new BalanceCommand(),
+                new BalanceCommand(),
                 new LockWheelsCommand()
                 // new ParallelDeadlineGroup(
                 //     new PauseCommand(2.5), 
