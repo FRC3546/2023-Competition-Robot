@@ -58,7 +58,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -75,6 +75,7 @@ public class RobotContainer {
 
   
   SendableChooser<Command> autos = new SendableChooser<>();
+  SendableChooser<Double> placePosition = new SendableChooser<>();
 
   HashMap<String, Command> pathPlannerEventMap = new HashMap<>();
 
@@ -115,16 +116,25 @@ public class RobotContainer {
 
     configureBindings();
 
-    autos.addOption("Score Cube", new DeployGamepieceAuto(Constants.cubeHigh, 100));
-    autos.addOption("Score Cone", new DeployGamepieceAuto(Constants.coneHigh, 100));
+    placePosition.addOption("High Cube", Constants.cubeHigh);
+    placePosition.addOption("High Cone", Constants.coneHigh);
 
-    autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(Constants.cubeHigh, 100));
-    autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(Constants.coneHigh, 100));
+    placePosition.addOption("Middle Cube", Constants.cubeMiddle);
+    placePosition.addOption("Middle Cone", Constants.cubeMiddle);
 
-    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.cubeHigh, 100));
-    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(Constants.coneHigh, 100));
+    placePosition.addOption("Low Cube", Constants.cubeLow);
+    placePosition.addOption("Low Cone", Constants.coneLow);
 
+    autos.addOption("Score Cube", new DeployGamepieceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cone", new DeployGamepieceAuto(placePosition.getSelected(), 100));
 
+    autos.addOption("Score Cube and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cone and Leave", new DeployGamepieceAndLeaveAuto(placePosition.getSelected(), 100));
+
+    autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
+    autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected(), 100));
+
+    SmartDashboard.putData("Deploy Position", placePosition);
     SmartDashboard.putData("Autonomous", autos);
 
     //SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -179,6 +189,22 @@ public class RobotContainer {
 
     // new JoystickButton(m_flipperController, 10)
     //   .onTrue(new MoveFlipperCommand(Constants.flipperArmUp));
+
+    new POVButton(m_flipperController, 180)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDPurple()));
+
+    new POVButton(m_flipperController, 0)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDYellow()));
+
+    new POVButton(m_flipperController, 90)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDRed()));
+
+    new POVButton(m_flipperController, 270)
+      .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
+
+
+
+
 
     new JoystickButton(m_flipperController, 1)
       .onTrue(new InstantCommand(() -> m_flipperSubsystem.OpenFlipperClamp()))

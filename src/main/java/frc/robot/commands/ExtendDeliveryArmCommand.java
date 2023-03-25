@@ -8,6 +8,7 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DeliveryArmSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.Timer;
 
 public class ExtendDeliveryArmCommand extends CommandBase{
     
@@ -15,6 +16,8 @@ public class ExtendDeliveryArmCommand extends CommandBase{
 
   private double endPosition;
   private boolean isLower;
+
+  private final Timer time = new Timer();
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
@@ -49,10 +52,15 @@ public class ExtendDeliveryArmCommand extends CommandBase{
     else{
       System.out.println("Error in ExtendDeliveryArmCommand initialize()");
     }
+
+    time.start();
   }
 
   @Override
   public void execute() {
+    if (Math.abs(m_deliveryArmSubsystem.GetDeliveryArmPosition() - endPosition) > 500)
+      time.reset();
+
 
   }
 
@@ -66,7 +74,8 @@ public class ExtendDeliveryArmCommand extends CommandBase{
   @Override
   public boolean isFinished() {
     
-    return (isLower && m_deliveryArmSubsystem.GetDeliveryArmPosition() > endPosition) || 
-    (!isLower && m_deliveryArmSubsystem.GetDeliveryArmPosition() < endPosition);
+    return ((isLower && m_deliveryArmSubsystem.GetDeliveryArmPosition() > endPosition) || 
+    (!isLower && m_deliveryArmSubsystem.GetDeliveryArmPosition() < endPosition) || 
+    (time.get() > 2));
   }
 }
