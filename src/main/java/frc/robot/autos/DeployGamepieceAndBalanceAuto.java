@@ -52,7 +52,7 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
             addCommands(
 
                 new DeliveryArmTransfer(),
-                new PauseCommand(0.9),
+                new PauseCommand(0.7),
                 new ExtendDeliveryArmCommand(deployPosition),
                 
                 // new ParallelDeadlineGroup(
@@ -85,8 +85,10 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
                 
                 //new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
 
-                new ParallelDeadlineGroup(new BalanceCommand(), new ExtendDeliveryArmCommand(endPosition)),
+                new ParallelDeadlineGroup(new BalanceCommand(), new ExtendDeliveryArmCommand(10000)),
+                new InstantCommand(() -> RobotContainer.m_ledSubsystem.)
                 new LockWheelsCommand()
+
                 // new ParallelDeadlineGroup(
                 //     new PauseCommand(2.5), 
                 //     new DriveCommand(RobotContainer.m_drivetrainSubsystem, y, x, rot))

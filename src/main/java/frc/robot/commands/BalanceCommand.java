@@ -190,7 +190,7 @@ public class BalanceCommand extends CommandBase {
 
     else{
       time.reset();
-      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 2 && (drivetrain.gyroscope.getRoll() > -6)) || time.getMatchTime() < 1){
+      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 2 && (drivetrain.gyroscope.getRoll() > -6)) || time.getMatchTime() < 0.2){
         balanced = true;
       }
 
