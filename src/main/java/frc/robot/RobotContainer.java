@@ -46,6 +46,7 @@ import frc.robot.commandgroups.ResetGyroResetEncoders;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.MoveFlipperCommand;
+import frc.robot.commands.RotateToAngleCommand;
 import frc.robot.commands.JoystickExtendDeliveryArmCommand;
 import frc.robot.commands.JoystickMoveFlipperCommand;
 import frc.robot.commands.FlipperArmCommand;
@@ -154,6 +155,9 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, 1)
       .whileTrue(new LockWheelsCommand());
+
+    new JoystickButton(m_driverController, 2)
+      .whileTrue(new RotateToAngleCommand(180, 1));
 
 
     // driver drivetrain buttons

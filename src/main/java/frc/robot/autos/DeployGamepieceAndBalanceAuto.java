@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commandgroups.DeliveryArmTransfer;
 import frc.robot.commands.BalanceCommand;
+import frc.robot.commands.DaSoundOfDaPolice;
 import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.FlipperArmCommand;
@@ -85,8 +86,9 @@ public class DeployGamepieceAndBalanceAuto extends SequentialCommandGroup{
                 
                 //new ParallelDeadlineGroup(new PauseCommand(3), new DriveCommand(RobotContainer.m_drivetrainSubsystem, balanceSpeed, x, rot)),
 
-                new ParallelDeadlineGroup(new BalanceCommand(), new ExtendDeliveryArmCommand(10000)),
-                new InstantCommand(() -> RobotContainer.m_ledSubsystem.)
+                new ParallelDeadlineGroup(new BalanceCommand(), new ExtendDeliveryArmCommand(10000), new DaSoundOfDaPolice(1, 0, 0, 0, 0, 0, 0.25)),
+                
+                new InstantCommand(() -> RobotContainer.m_ledSubsystem.LEDSet(0, 1, 0)),
                 new LockWheelsCommand()
 
                 // new ParallelDeadlineGroup(

@@ -190,12 +190,12 @@ public class BalanceCommand extends CommandBase {
 
     else{
       time.reset();
-      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 2 && (drivetrain.gyroscope.getRoll() > -6)) || time.getMatchTime() < 0.2){
+      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 7 && (drivetrain.gyroscope.getRoll() > -11)) || time.getMatchTime() < 0.2){
         balanced = true;
       }
 
       else{
-        if(drivetrain.gyroscope.getRoll() > 2){
+        if(drivetrain.gyroscope.getRoll() > 7){
           time.reset();
           drivetrain.drive(
             ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
@@ -204,7 +204,7 @@ public class BalanceCommand extends CommandBase {
           balanced = false;
         }
     
-        else if(drivetrain.gyroscope.getRoll() < -6){
+        else if(drivetrain.gyroscope.getRoll() < -11){
           time.reset();
           drivetrain.drive(
             ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
