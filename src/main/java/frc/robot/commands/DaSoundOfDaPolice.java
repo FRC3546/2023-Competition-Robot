@@ -31,6 +31,7 @@ public class DaSoundOfDaPolice extends CommandBase{
 
     @Override
     public void initialize() {
+        System.out.println("WHOOP WHOOOP");
         ledSubsystem.LEDSet(r1, g1, b1);
         time.start();
     }
@@ -43,7 +44,7 @@ public class DaSoundOfDaPolice extends CommandBase{
             else{
                 ledSubsystem.LEDSet(r1,g1,b2);
             }
-
+            time.restart();
         }
 
     }
