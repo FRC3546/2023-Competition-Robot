@@ -211,7 +211,7 @@ public class BalanceCommand extends CommandBase {
       } 
       else {
     drivetrain.drive(
-        ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+        ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
         
       );
   
