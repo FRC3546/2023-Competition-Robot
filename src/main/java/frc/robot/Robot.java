@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OperatorConstants;
 
-import frc.robot.subsystems.DeliveryArmSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -53,7 +52,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Encoder Value", RobotContainer.m_deliverySubsystem.GetDeliveryArmPosition());
     SmartDashboard.putNumber("Roll Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getRoll());
     SmartDashboard.putNumber("RawYaw", RobotContainer.m_drivetrainSubsystem.gyroscope.getYaw());
-    
+
+    SmartDashboard.putNumber("X rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroX());
+    SmartDashboard.putNumber("Y rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroY());
+    SmartDashboard.putNumber("Z rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroZ());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

@@ -1,12 +1,11 @@
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -17,6 +16,9 @@ public class BalanceCommand extends CommandBase {
 
     public double forwardSlow = 0.3;
     public double backwardSlow = -0.3;
+
+    public double time1 = Double.MIN_VALUE;
+    public double lastAngle;
 
     public double zero = 0.0;
 
@@ -169,14 +171,14 @@ public class BalanceCommand extends CommandBase {
     // }
     
 
-    if(drivetrain.gyroscope.getRoll() > 2){
-      time.reset();
-      drivetrain.drive(
-        ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
-      );
-      System.out.println("Moving backward into range");
-      balanced = false;
-    }
+    // if(drivetrain.gyroscope.getRoll() > 2){
+    //   time.reset();
+    //   drivetrain.drive(
+    //     ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
+    //   );
+    //   System.out.println("Moving backward into range");
+    //   balanced = false;
+    // }
 
     // else if(drivetrain.gyroscope.getRoll() < -6){
     //   time.reset();
@@ -188,34 +190,61 @@ public class BalanceCommand extends CommandBase {
     //   balanced = false;
     // }
 
-    else{
+    // else{
+      if(time1 == Double.MIN_VALUE) {
+      time1 = Timer.getFPGATimestamp();
+      lastAngle = drivetrain.gyroscope.getRoll();  
+      }
       time.reset();
-      if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 7 && (drivetrain.gyroscope.getRoll() > -11)) || time.getMatchTime() < 0.2){
+
+      double duration = Timer.getFPGATimestamp() - time1;
+      
+      double rateOfChange = (lastAngle - drivetrain.gyroscope.getRoll())/ duration;
+
+      SmartDashboard.putNumber("RateOfChange", rateOfChange);
+      time1 = Timer.getFPGATimestamp();
+      lastAngle = drivetrain.gyroscope.getRoll();
+      
+      //-3
+      if(rateOfChange < -50) {
         balanced = true;
+      } 
+      else {
+    drivetrain.drive(
+        ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+        
+      );
+  
       }
+     
+      
+      // We are balanced
+      // if((time.get() > 3 && drivetrain.gyroscope.getRoll() < 7 && (drivetrain.gyroscope.getRoll() > -11)) || time.getMatchTime() < 0.2){
+      //   balanced = true;
+      // }
 
-      else{
-        if(drivetrain.gyroscope.getRoll() > 7){
-          time.reset();
-          drivetrain.drive(
-            ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
-          );
-          System.out.println("Moving backward into range");
-          balanced = false;
-        }
+      // else{
+      //   if(drivetrain.gyroscope.getRoll() > 7){
+      //      time.reset();
+      //      drivetrain.drive(
+      //        ChassisSpeeds.fromFieldRelativeSpeeds(backwardSlow, zero, zero, drivetrain.getRotation())
+      //     );
+      //     System.out.println("Moving backward into range");
+      //     balanced = false;
+      //   }
     
-        else if(drivetrain.gyroscope.getRoll() < -11){
-          time.reset();
-          drivetrain.drive(
-            ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
+      //   else if(drivetrain.gyroscope.getRoll() < -11){
+      //     time.reset();
+      //     drivetrain.drive(
+      //       ChassisSpeeds.fromFieldRelativeSpeeds(forwardSlow, zero, zero, drivetrain.getRotation())
             
-          );
-          System.out.println("moving forward into range");
-          balanced = false;
-        }
-      }
+      //     );
+      //     System.out.println("moving forward into range");
+      //     balanced = false;
+      //   }
+      // }
 
-    }
+    // }
 
 
   }

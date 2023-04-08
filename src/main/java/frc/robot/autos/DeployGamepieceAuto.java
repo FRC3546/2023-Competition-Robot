@@ -2,21 +2,12 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import frc.robot.Robot;
-import frc.robot.Constants;
+
 import frc.robot.RobotContainer;
 import frc.robot.commandgroups.DeliveryArmTransfer;
-import frc.robot.commands.DeliveryArmCommand;
 import frc.robot.commands.ExtendDeliveryArmCommand;
 import frc.robot.commands.PauseCommand;
-import frc.robot.subsystems.DeliveryArmSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem;
-
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 
 import java.util.function.DoubleSupplier;
 import frc.robot.commands.DriveCommand;
@@ -40,10 +31,10 @@ public class DeployGamepieceAuto extends SequentialCommandGroup{
                 new PauseCommand(0.9),
                 new ExtendDeliveryArmCommand(deployPosition),
                 
-                new ParallelDeadlineGroup(
-                    new PauseCommand(1),
-                    new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
-                ),
+                // new ParallelDeadlineGroup(
+                //     new PauseCommand(1),
+                //     new DriveCommand(RobotContainer.m_drivetrainSubsystem, moveForward, x, rot)
+                // ),
 
                 new InstantCommand(() -> RobotContainer.m_deliverySubsystem.OpenDeliveryArmClamp()),
                 new PauseCommand(0.5),

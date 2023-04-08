@@ -140,6 +140,7 @@ public class RobotContainer {
     autos.addOption("Score Cube and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
     autos.addOption("Score Cone and Leave and Balance", new DeployGamepieceAndLeaveAndBalanceAuto(placePosition.getSelected().doubleValue(), 100));
 
+
     SmartDashboard.putData("Deploy Position", placePosition);
     SmartDashboard.putData("Autonomous", autos);
 
@@ -156,8 +157,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, 1)
       .whileTrue(new LockWheelsCommand());
 
-    new JoystickButton(m_driverController, 2)
-      .whileTrue(new RotateToAngleCommand(180, 1));
+    // new JoystickButton(m_driverController, 2)
+    //   .whileTrue(new RotateToAngleCommand(180, 1));
 
 
     // driver drivetrain buttons
@@ -195,8 +196,8 @@ public class RobotContainer {
     new POVButton(m_flipperController, 270)
       .onTrue(new InstantCommand(() -> m_ledSubsystem.LEDBlue()));
 
-    new JoystickButton(m_flipperController, 7)
-      .onTrue(new DaSoundOfDaPolice(1, 0, 0, 0, 0, 1, .5));
+    // new JoystickButton(m_flipperController, 7)
+    //   .onTrue(new DaSoundOfDaPolice(1, 0, 0, 0, 0, 1, .5));
 
 
     new JoystickButton(m_flipperController, 4)
