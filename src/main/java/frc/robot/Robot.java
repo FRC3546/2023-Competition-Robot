@@ -7,6 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants.OperatorConstants;
+
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,6 +32,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    RobotContainer.m_drivetrainSubsystem.gyroscope.zeroYaw();
     m_robotContainer = new RobotContainer();
   }
 
@@ -39,6 +45,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    
+    SmartDashboard.putNumber("Flipper Encoder Value", RobotContainer.m_flipperSubsystem.GetFlipperPosition());
+    SmartDashboard.putBoolean("Manual Arm Active", OperatorConstants.kArmIsManual);
+    SmartDashboard.putNumber("flipper motor speed", RobotContainer.m_flipperSubsystem.GetFlipperMotorSpeed());
+    SmartDashboard.putNumber("Encoder Value", RobotContainer.m_deliverySubsystem.GetDeliveryArmPosition());
+    SmartDashboard.putNumber("Roll Value", RobotContainer.m_drivetrainSubsystem.gyroscope.getRoll());
+    SmartDashboard.putNumber("RawYaw", RobotContainer.m_drivetrainSubsystem.gyroscope.getYaw());
+
+    SmartDashboard.putNumber("X rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroX());
+    SmartDashboard.putNumber("Y rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroY());
+    SmartDashboard.putNumber("Z rate", RobotContainer.m_drivetrainSubsystem.gyroscope.getRawGyroZ());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -56,7 +73,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+
+    RobotContainer.m_drivetrainSubsystem.setDriveMotorBrake(true);
+    RobotContainer.m_drivetrainSubsystem.setSteerMotorBrake(true);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    RobotContainer.m_drivetrainSubsystem.setGyroOffset(-180);
+
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -70,10 +92,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    RobotContainer.m_drivetrainSubsystem.setDriveMotorBrake(false);
+    RobotContainer.m_drivetrainSubsystem.setSteerMotorBrake(true);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    RobotContainer.m_drivetrainSubsystem.setGyroOffset(-90);
+    new InstantCommand(() -> RobotContainer.m_deliverySubsystem.Stop());
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -81,7 +107,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {
